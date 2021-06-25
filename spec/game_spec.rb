@@ -35,6 +35,12 @@ RSpec.describe Game do
     expect(game.score).to eq(24)
   end
 
+  # Test 5: Perfect Game!!! 300
+  it "perfect game (12 rolls of 10 pins) must result in score of 300" do
+    roll_many(12, Game::PINS)
+    expect(game.score).to eq(300)
+  end
+
   def roll_many(rolls, pins)
     rolls.times do
       game.roll(pins)
