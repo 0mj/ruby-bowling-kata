@@ -28,11 +28,11 @@ RSpec.describe Game do
 
   # Test 4: Strike!
   it "rolling 10, 3, 4, followed by 16 rolls of 0 must have a score of 24" do
-      roll_strike
-      game.roll(3)
-      game.roll(4)
-      roll_many(16, 0)
-      expect(game.score).to eq(24)
+    roll_strike
+    game.roll(3)
+    game.roll(4)
+    roll_many(16, 0)
+    expect(game.score).to eq(24)
   end
 
   def roll_many(rolls, pins)
