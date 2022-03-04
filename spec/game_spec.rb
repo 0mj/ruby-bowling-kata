@@ -17,6 +17,15 @@ RSpec.describe Game do
     expect(game.score).to eq(10)
   end
 
+  # 3
+  it "Rolling 5, 5, 3 followed by 17 rolls of 0 has a score of 16" do
+    game.roll(5)
+    game.roll(5)
+    game.roll(3)
+    roll_many(17, 0)
+    expect(game.score).to eq(16)
+  end
+
   def roll_many(rolls, pins)
     rolls.times do
       game.roll(pins)
