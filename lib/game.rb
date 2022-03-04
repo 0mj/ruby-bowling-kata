@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Game
-  def initialize 
+  def initialize
     @rolls = []
   end
+
   def roll(pins)
     @rolls.push(pins)
   end
