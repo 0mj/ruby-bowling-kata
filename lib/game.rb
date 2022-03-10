@@ -2,9 +2,15 @@
 
 # game
 class Game
-  def roll(pins); end
+  def initialize
+    @rolls = []
+  end
+
+  def roll(pins)
+    @rolls.push(pins)
+  end
 
   def score
-    0
+    @rolls.sum
   end
 end
