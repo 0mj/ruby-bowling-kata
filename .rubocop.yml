@@ -7,7 +7,7 @@
 # RuboCop will start looking for the configuration file in the directory
 # where the inspected file is and continue its way up to the root directory.
 #
-# See https://docs.rubocop.org/rubocop/configuration
+# See https://docs.rubocop.org/rubocop/configuration RfHl
 AllCops:
   NewCops: enable
 
