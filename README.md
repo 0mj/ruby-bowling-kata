@@ -1,4 +1,6 @@
 #### grind it into your brain
+:+1: 2022-04-14--018 :usa:  
+![Alt text](https://media.giphy.com/media/wi8Ez1mwRcKGI/giphy.gif "Optional title") 
 :+1: 2022-04-11--017 :usa:   
 :+1: 2022-04-07--016 :uk:   
 :+1: 2022-04-05--015 :uk:   
