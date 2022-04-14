@@ -1,6 +1,6 @@
 #### grind it into your brain
 :+1: 2022-04-14--018 :usa:  
-![Alt text](https://media.giphy.com/media/wi8Ez1mwRcKGI/giphy.gif "Optional title")  
+![DO IT](https://media.giphy.com/media/wi8Ez1mwRcKGI/giphy.gif "DO IT")  
 :+1: 2022-04-11--017 :usa:  
 :+1: 2022-04-07--016 :uk:   
 :+1: 2022-04-05--015 :uk:   
@@ -22,3 +22,5 @@
 [instructions fork](https://gist.github.com/theotherzach/1ddc1f348d1c711ea0e8da67efa82cf4)  
 
 
+#### Version Managers -_-
+[asdf](https://github.com/asdf-vm/asdf)  
