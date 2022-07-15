@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Game
-  PINS = 10
   FRAMES = 10
+  PINS = 10
 
   def initialize
     @rolls = []
@@ -18,21 +18,15 @@ class Game
 
     FRAMES.times do
       if strike?(frame_index)
-        puts "STRIKE!"
         result += PINS + strike_bonus(frame_index)
-        puts "# of rolls completed = #{frame_index} score = #{result}"
         frame_index += 1
       elsif spare?(frame_index)
         result += PINS + spare_bonus(frame_index)
-        puts "# of rolls completed = #{frame_index} score = #{result}"
         frame_index += 2
       else
         result += @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0)
-        puts "# of rolls completed = #{frame_index + 1} score = #{result}"
         frame_index += 2
       end
-
-      
     end
 
     result
@@ -48,13 +42,11 @@ class Game
     @rolls.fetch(frame_index + 2, 0)
   end
 
-  def strike_bonus(frame_index)
-    puts "STRIKE BONUS"
-    puts "frame index = #{frame_index}"
-    @rolls.fetch(frame_index + 1, 0) + @rolls.fetch(frame_index + 2, 0)
+  def strike?(frame_index)
+    @rolls.fetch(frame_index, 0) == PINS
   end
 
-  def strike?(frame_index)
-    @rolls.fetch(frame_index) == PINS
+  def strike_bonus(frame_index)
+    @rolls.fetch(frame_index + 1, 0) + @rolls.fetch(frame_index + 2, 0)
   end
 end
