@@ -23,11 +23,16 @@ RSpec.describe Game do
   end
 
   it "Rolling 10, 3, 4, followed by 16 rolls of 0 must score 24" do
-    game.roll(10)
+    roll_strike
     game.roll(3)
     game.roll(4)
     roll_many(16, 0)
     expect(game.score).to eq(24)
+  end
+
+  it "Rolling 12 rolls of 10 must score 300" do
+    roll_many(12, 10)
+    expect(game.score).to eq(300)
   end
 end
 
@@ -39,4 +44,8 @@ end
 
 def roll_spare
   roll_many(2, 5)
+end
+
+def roll_strike
+  game.roll(Game::PINS)
 end
