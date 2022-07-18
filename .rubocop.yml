@@ -9,9 +9,8 @@
 #
 # See https://docs.rubocop.org/rubocop/configuration
 AllCops:
-  NewCops: enable
+  NewCops: enable 
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
-
   
