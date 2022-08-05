@@ -21,7 +21,6 @@ class Game
         result += PINS + strike_bonus(frame_index)
         frame_index += 1
       elsif spare?(frame_index)
-
         result += PINS + spare_bonus(frame_index)
         frame_index += 2
       else
@@ -40,14 +39,14 @@ class Game
   end
 
   def spare_bonus(frame_index)
-    @rolls.fetch(frame_index + 2, 0)
+    @rolls.fetch(frame_index + 2)
   end
 
   def strike?(frame_index)
-    @rolls.fetch(frame_index, 0) == PINS
+    @rolls.fetch(frame_index, 0) == PINS # THATS a strike!
   end
 
   def strike_bonus(frame_index)
-    @rolls.fetch(frame_index + 1, 0) + @rolls.fetch(frame_index + 2)
+    @rolls.fetch(frame_index + 1, 0) + @rolls.fetch(frame_index + 2, 0)
   end
 end
