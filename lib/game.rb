@@ -3,7 +3,6 @@
 class Game
   PINS = 10
   FRAMES = 10
-
   def initialize
     @rolls = []
   end
@@ -39,7 +38,7 @@ class Game
   end
 
   def spare_bonus(frame_index)
-    @rolls.fetch(frame_index + 2)
+    @rolls.fetch(frame_index + 2, 0) # The spare bonus adds 10 to the 1st ball in the next frame
   end
 
   def strike?(frame_index)

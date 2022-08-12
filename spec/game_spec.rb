@@ -1,31 +1,33 @@
 # frozen_string_literal: true
 
 require_relative "../lib/game"
+
 RSpec.describe Game do
   let(:game) { Game.new }
-  # 1 gutter stunner ( Rolling all gutters )
+
+  # gutter game
   it "Rolling 20 rolls of 0 must score 0" do
     roll_many(20, 0)
     expect(game.score).to eq(0)
   end
 
-  # 2 10 gutters and 10 rolls of 1 seems hard :|
-  it "Rolling 10 gutters and 10 rolls of 1 must score 10" do
+  # nearly impossible 10 zeros and 10 ones
+  it "Rolling 10 rolls of 0 and 10 rolls of 1 must score 10" do
     roll_many(10, 0)
     roll_many(10, 1)
     expect(game.score).to eq(10)
   end
 
-  # 3 Spare Me! Picking up a spare
-  it "Rolling 5, 5, 3 followed by 17 rolls of 0 must have a score of 16" do
+  # picking up the spare
+  it "Rolling 5, 5, 3 followed by 17 rolls of 0 must score 16" do
     roll_spare
     game.roll(3)
     roll_many(17, 0)
     expect(game.score).to eq(16)
   end
 
-  # 4 YOU DID IT! You gotta strike lil Johnny!
-  it "Rolling 10, 3, 4 followed by 16 rolls of 0 must score 24" do
+  # this is why you bowl! To roll dimes!
+  it "Rolling 10, 3, 4 and 16 rolls of 0 must score 24" do
     roll_strike
     game.roll(3)
     game.roll(4)
@@ -33,7 +35,7 @@ RSpec.describe Game do
     expect(game.score).to eq(24)
   end
 
-  # 5 how many PERFECT GAMEs have there actually been?
+  # you have reached legendary status!
   it "Rolling 12 rolls of 10 must score 300" do
     roll_many(12, 10)
     expect(game.score).to eq(300)
