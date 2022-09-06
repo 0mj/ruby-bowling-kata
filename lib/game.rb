@@ -15,6 +15,7 @@ class Game
   def score
     result = 0
     frame_index = 0
+
     FRAMES.times do
       if strike?(frame_index)
         result += PINS + strike_bonus(frame_index)
@@ -28,6 +29,7 @@ class Game
         frame_index += 2
       end
     end
+
     result
   end
 
@@ -46,6 +48,6 @@ class Game
   end
 
   def strike_bonus(frame_index)
-    @rolls.fetch(frame_index + 1) + @rolls.fetch(frame_index + 2, 0)
+    @rolls.fetch(frame_index + 1, 0) + @rolls.fetch(frame_index + 2, 0)
   end
 end
