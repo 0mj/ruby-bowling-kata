@@ -33,8 +33,6 @@ class Game
     result
   end
 
-  private
-
   def spare?(frame_index)
     @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0) == PINS
   end
