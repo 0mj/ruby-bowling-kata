@@ -15,6 +15,7 @@ class Game
   def score
     frame_index = 0
     result = 0
+
     FRAMES.times do
       if strike?(frame_index)
         result += PINS + strike_bonus(frame_index)
@@ -27,7 +28,6 @@ class Game
         frame_index += 2
       end
     end
-
     result
   end
 
