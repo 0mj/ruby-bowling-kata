@@ -44,6 +44,30 @@
 [instructions](https://gist.github.com/0mj/663e782ce5d55d48bbfc63dc9c28e3f5)  
 [instructions fork](https://gist.github.com/theotherzach/1ddc1f348d1c711ea0e8da67efa82cf4)  
 
+  
 
-#### Version Managers -_-
-[asdf](https://github.com/asdf-vm/asdf)  
+
+`$ gem install bundler && bundle init`  
+
+Edit gem file  
+`$ bundle install`
+
+Initiate rubocop  
+`$ bundle exec rubocop --init`  
+  
+Open & Edit rubocop file  
+
+Create lib and spec directories  
+`$ mkdir lib spec`  
+  
+Make .keep files for those directories  
+why?  
+idk  
+`$ touch lib/.keep spec/.keep`  
+  
+## The Code
+
+### Workflow
+* Run your specs: `bundle exec rspec`
+* Run rubocop: `bundle exec rubocop -A`
+* Lint & Commit your code after each test
