@@ -74,7 +74,8 @@ AllCops:
   NewCops: enable
 
 Style/StringLiterals:
-  EnforcedStyle: double_quotes```
+  EnforcedStyle: double_quotes
+```
 
 Create lib and spec directories  
 `$ mkdir lib spec`  
