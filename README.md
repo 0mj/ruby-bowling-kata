@@ -68,7 +68,13 @@ end
 Initiate rubocop  
 `$ bundle exec rubocop --init`  
   
-Open & Edit rubocop file  
+Open *.ruobcop.yml* and append the following, save and close.  
+```ruby
+AllCops:
+  NewCops: enable
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes```
 
 Create lib and spec directories  
 `$ mkdir lib spec`  
