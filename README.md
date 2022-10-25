@@ -57,7 +57,7 @@ Add  `2.6.6` to that new file
 
 Edit gem file  
 
-```
+```ruby
 group :test do
   gem "rspec", "3.9.0"
   gem "rubocop", "0.92.0"
