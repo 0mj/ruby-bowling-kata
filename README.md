@@ -24,7 +24,7 @@
 :+1: 2022-04-21--020  
 :+1: 2022-04-18--019  
 :+1: 2022-04-14--018 :usa:  
-![DO IT](https://media.giphy.com/media/wi8Ez1mwRcKGI/giphy.gif "DO IT")  
+![Just Start](https://media.giphy.com/media/wi8Ez1mwRcKGI/giphy.gif "DO IT")  
 :+1: 2022-04-11--017 :usa:  
 :+1: 2022-04-07--016 :uk:   
 :+1: 2022-04-05--015 :uk:   
@@ -45,9 +45,17 @@
 [instructions](https://gist.github.com/0mj/663e782ce5d55d48bbfc63dc9c28e3f5)  
 [instructions fork](https://gist.github.com/theotherzach/1ddc1f348d1c711ea0e8da67efa82cf4)  
 
-  
-`$ rm -rf .rubocop.yml .ruby-version Gemfile Gemfile.lock lib spec`  
+#### Creating Directory & Open
 
++ Delete the directory from your previous kata run. Probably `cd ~/ && rm -rf ~/code/ruby-bowling-kata` or `$ rm -rf .rubocop.yml .ruby-version Gemfile Gemfile.lock lib spec`       
++ Re-create the directory. I suggest `mkdir -p ~/code/ruby-bowling-kata`
++ cd (change directory) into your project root. Probably `cd ~/code/ruby-bowling-kata`
++ Open the directory as a project in your editor of choice. `code .`
+
+  
+
+#### Project Setup
+create the file `.ruby-version` with the contents  
 `$ touch .ruby-version`  
 Add  `2.6.6` to that new file  
 
