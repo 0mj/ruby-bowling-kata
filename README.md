@@ -1,4 +1,5 @@
 #### grind it into your brain
+2022-10-25--042  
 :+1: 2022-10-06--041   
 :+1: 2022-09-22--040  
 :+1: 2022-09-12--039  [.......](https://gist.github.com/0mj/663e782ce5d55d48bbfc63dc9c28e3f5)  
@@ -45,11 +46,23 @@
 [instructions fork](https://gist.github.com/theotherzach/1ddc1f348d1c711ea0e8da67efa82cf4)  
 
   
+`$ rm -rf .rubocop.yml .ruby-version Gemfile Gemfile.lock lib spec`  
+
+`$ touch .ruby-version`  
+Add  `2.6.6` to that new file  
+
 
 
 `$ gem install bundler && bundle init`  
 
 Edit gem file  
+
+```
+group :test do
+  gem "rspec", "3.9.0"
+  gem "rubocop", "0.92.0"
+end
+```
 `$ bundle install`
 
 Initiate rubocop  
