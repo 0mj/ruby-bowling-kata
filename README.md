@@ -77,12 +77,10 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 ```
 
-Create lib and spec directories  
+Create *lib* and *spec* directories  
 `$ mkdir lib spec`  
   
-Make .keep files for those directories  
-why?  
-idk  
+Make *.keep* files for commiting empty directories.  
 `$ touch lib/.keep spec/.keep`  
   
 ## The Code
