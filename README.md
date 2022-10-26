@@ -115,3 +115,4 @@ require_relative "../lib/game/"
 RSpec.describe Game do
 end
 ```
++ Run your specs & verify 0 examples, 0 failures `$ bundle exec rspec`  
