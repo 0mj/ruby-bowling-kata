@@ -41,13 +41,13 @@
 :+1: 2022-03-09--004  
 
 
-#### ruby-bowling-kata
-[instructions](https://gist.github.com/0mj/663e782ce5d55d48bbfc63dc9c28e3f5)  
-[instructions fork](https://gist.github.com/theotherzach/1ddc1f348d1c711ea0e8da67efa82cf4)  
+# The Ruby Bowling Kata Steps
+
+[Instructions](https://gist.github.com/theotherzach/1ddc1f348d1c711ea0e8da67efa82cf4)  
 
 #### Creating Directory & Open
 
-+ Delete the directory from your previous kata run. Probably `cd ~/ && rm -rf ~/code/ruby-bowling-kata` or `$ rm -rf .rubocop.yml .ruby-version Gemfile Gemfile.lock lib spec`       
++ Delete the directory from your previous kata run. Probably `cd ~/ && rm -rf ~/code/ruby-bowling-kata` or `rm -rf .rubocop.yml .ruby-version Gemfile Gemfile.lock lib spec`       
 + Re-create the directory. I suggest `mkdir -p ~/code/ruby-bowling-kata`
 + cd (change directory) into your project root. Probably `cd ~/code/ruby-bowling-kata`
 + Open the directory as a project in your editor of choice. `code .`
@@ -56,63 +56,63 @@
 
 #### Project Setup
 create the file `.ruby-version` with the contents  
-`$ touch .ruby-version`  
+`touch .ruby-version`  
 Add  `2.6.6` to that new file  
 
 
-+ We'll be using `bundler` to manage our dependencies, so run `$ gem install bundler && bundle init` and then append the following to the *Gemfile*
-```ruby
-group :test do
-  gem "rspec", "3.9.0"
-  gem "rubocop", "0.92.0"
-end
-```
-+ Install project dependencies:  `$ bundle install`  
-+ Initialize rubocop: `$ bundle exec rubocop --init` Open *.ruobcop.yml* and append the following, save and close.  
-```ruby
-AllCops:
-  NewCops: enable
++ We'll be using `bundler` to manage our dependencies, so run `gem install bundler && bundle init` and then append the following to the *Gemfile*
+  ```ruby
+  group :test do
+    gem "rspec", "3.9.0"
+    gem "rubocop", "0.92.0"
+  end
+  ```
++ Install project dependencies:  `bundle install`  
++ Initialize rubocop: `bundle exec rubocop --init` Open *.ruobcop.yml* and append the following, save and close.  
+  ```ruby
+  AllCops:
+    NewCops: enable
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-```
+  Style/StringLiterals:
+    EnforcedStyle: double_quotes
+  ```
 
-+ Create *lib* and *spec* directories `$ mkdir lib spec`  
-+ Make *.keep* files for commiting empty directories. `$ touch lib/.keep spec/.keep`  
-+ Run rubocop with autocorrect: `$ bundle exec rubocop -A` Manually correct any outstanding issues.  
++ Create *lib* and *spec* directories `mkdir lib spec`  
++ Make *.keep* files for commiting empty directories. `touch lib/.keep spec/.keep`  
++ Run rubocop with autocorrect: `bundle exec rubocop -A` Manually correct any outstanding issues.  
   
 ## The Code
 
 ### Workflow
-+ Run your specs: `$ bundle exec rspec`
-+ Run rubocop: `$ bundle exec rubocop -A`
++ Run your specs: `bundle exec rspec`
++ Run rubocop: `bundle exec rubocop -A`
 + Lint & Commit your code after each test
 
 ### Test 0: Create The Files
 **RED**
 
-+ Create the file *spec/game_spec.rb* `$ touch spec/game_spec.rb` & add the following  
++ Create the file *spec/game_spec.rb* `touch spec/game_spec.rb` & add the following  
   ```ruby
   RSpec.describe Game do
   end
   ```
 
 + Verify specs is red (failing) because it doesn't know what a Game is
-+ Create *lib/game.rb* `$ touch lib/game.rb` & add the following  
++ Create *lib/game.rb* `touch lib/game.rb` & add the following  
   ```ruby
   class Game
   end
   ```
-+ Run rubocop `$ bundle exec rubocop -A`  
++ Run rubocop `bundle exec rubocop -A`  
 
 **GREEN**
-* Update *spec/game_spec.rb* so it looks like this..  
-```ruby
-# frozen_string_literal: true
++ Update *spec/game_spec.rb* so it looks like this..
+  ```ruby
+  # frozen_string_literal: true
 
-require_relative "../lib/game/"
+  require_relative "../lib/game/"
 
-RSpec.describe Game do
-end
-```
-+ Run your specs & verify 0 examples, 0 failures `$ bundle exec rspec`  
+  RSpec.describe Game do
+  end
+  ```
++ Run your specs & verify 0 examples, 0 failures `bundle exec rspec`  
