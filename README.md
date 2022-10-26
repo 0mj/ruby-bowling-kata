@@ -55,9 +55,10 @@
   
 
 #### Project Setup
-create the file `.ruby-version` with the contents  
-`touch .ruby-version`  
-Add  `2.6.6` to that new file  
++ Create the file *.ruby-version* `touch .ruby-version` append the following, save & close
+  ```
+  2.6.6
+  ```  
 
 
 + We'll be using `bundler` to manage our dependencies, so run `gem install bundler && bundle init` and then append the following to the *Gemfile*
@@ -68,7 +69,7 @@ Add  `2.6.6` to that new file
   end
   ```
 + Install project dependencies:  `bundle install`  
-+ Initialize rubocop: `bundle exec rubocop --init` Open *.ruobcop.yml* and append the following, save and close.  
++ Initialize rubocop: `bundle exec rubocop --init` Open *.ruobcop.yml* and append the following, save and close.
   ```ruby
   AllCops:
     NewCops: enable
@@ -91,14 +92,14 @@ Add  `2.6.6` to that new file
 ### Test 0: Create The Files
 **RED**
 
-+ Create the file *spec/game_spec.rb* `touch spec/game_spec.rb` & add the following  
++ Create the file *spec/game_spec.rb* `touch spec/game_spec.rb` & add the following
   ```ruby
   RSpec.describe Game do
   end
   ```
 
 + Verify specs is red (failing) because it doesn't know what a Game is
-+ Create *lib/game.rb* `touch lib/game.rb` & add the following  
++ Create *lib/game.rb* `touch lib/game.rb` & add the following
   ```ruby
   class Game
   end
