@@ -60,11 +60,7 @@ create the file `.ruby-version` with the contents
 Add  `2.6.6` to that new file  
 
 
-
-`$ gem install bundler && bundle init`  
-
-Edit gem file  
-
++ We'll be using `bundler` to manage our dependencies, so run `$ gem install bundler && bundle init` and then append the following to the *Gemfile*
 ```ruby
 group :test do
   gem "rspec", "3.9.0"
