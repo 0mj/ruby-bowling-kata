@@ -67,12 +67,8 @@ group :test do
   gem "rubocop", "0.92.0"
 end
 ```
-`$ bundle install`
-
-Initiate rubocop  
-`$ bundle exec rubocop --init`  
-  
-Open *.ruobcop.yml* and append the following, save and close.  
++ Install project dependencies:  `$ bundle install`  
++ Initialize rubocop: `$ bundle exec rubocop --init` Open *.ruobcop.yml* and append the following, save and close.  
 ```ruby
 AllCops:
   NewCops: enable
@@ -81,15 +77,41 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 ```
 
-Create *lib* and *spec* directories  
-`$ mkdir lib spec`  
-  
-Make *.keep* files for commiting empty directories.  
-`$ touch lib/.keep spec/.keep`  
++ Create *lib* and *spec* directories `$ mkdir lib spec`  
++ Make *.keep* files for commiting empty directories. `$ touch lib/.keep spec/.keep`  
++ Run rubocop with autocorrect: `$ bundle exec rubocop -A` Manually correct any outstanding issues.  
   
 ## The Code
 
 ### Workflow
-* Run your specs: `bundle exec rspec`
-* Run rubocop: `bundle exec rubocop -A`
-* Lint & Commit your code after each test
++ Run your specs: `$ bundle exec rspec`
++ Run rubocop: `$ bundle exec rubocop -A`
++ Lint & Commit your code after each test
+
+### Test 0: Create The Files
+**RED**
+
++ Create the file *spec/game_spec.rb* `$ touch spec/game_spec.rb` & add the following  
+  ```ruby
+  RSpec.describe Game do
+  end
+  ```
+
++ Verify specs is red (failing) because it doesn't know what a Game is
++ Create *lib/game.rb* `$ touch lib/game.rb` & add the following  
+  ```ruby
+  class Game
+  end
+  ```
++ Run rubocop `$ bundle exec rubocop -A`  
+
+**GREEN**
+* Update *spec/game_spec.rb* so it looks like this..  
+```ruby
+# frozen_string_literal: true
+
+require_relative "../lib/game/"
+
+RSpec.describe Game do
+end
+```
