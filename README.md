@@ -135,4 +135,36 @@
     end
   end
   ```
-  
+
+**RED**
+
+* Add `expect(game.score).to eq(0)` to *game_spec.rb* & verify that it fails with a `undefined method 'score'`
+  ```ruby
+  # frozen_string_literal: true
+
+  require_relative "../lib/game"
+  RSpec.describe Game do
+    it "20 rolls of 0 must score 0" do
+      game = Game.new
+      20.times do
+        game.roll(0)
+      end
+      expect(game.score).to eq(0)
+    end
+  end
+  ```
+
+**GREEN**
+
+* Update *game.rbo* & validate that the test passes.
+  ```ruby
+  # frozen_string_literal: true
+
+  class Game
+    def roll(pins); end
+
+    def score
+      0
+    end
+  end
+  ```
