@@ -168,3 +168,9 @@
     end
   end
   ```
+
+
+### Test 2: 10 gutter balls & 10 rolls of 1
+* Add the following spec and verify that it fails with `expected: 10 got: 0`
+  * <img width="628" alt="Screen Shot 2020-09-25 at 2 10 35 PM" src="https://user-images.githubusercontent.com/1697198/94306717-12b08b00-ff39-11ea-991c-24d76a9fe2ff.png">
+
