@@ -171,6 +171,18 @@
 
 
 ### Test 2: 10 gutter balls & 10 rolls of 1
-* Add the following spec and verify that it fails with `expected: 10 got: 0`
-  * <img width="628" alt="Screen Shot 2020-09-25 at 2 10 35 PM" src="https://user-images.githubusercontent.com/1697198/94306717-12b08b00-ff39-11ea-991c-24d76a9fe2ff.png">
+**RED** 
+* Add the following spec and verify that it fails with `expected: 10 got: 0`  
+<img width="628" src="https://user-images.githubusercontent.com/1697198/94306717-12b08b00-ff39-11ea-991c-24d76a9fe2ff.png">
+
+**GREEN**
+* Update *game.rb* & verify that the spec passes  
+<img width="514" src="https://user-images.githubusercontent.com/1697198/94307137-cf0a5100-ff39-11ea-8ff1-e5b22f33f186.png">  
+
+**REFACTOR**
+* In *game_spec.rb*, extract `game = Game.new` into an [RSpec let](https://relishapp.com/rspec/rspec-core/v/3-9/docs/helper-methods/let-and-let)  
+<img width="693" src="https://user-images.githubusercontent.com/1697198/94308346-fd892b80-ff3b-11ea-81f0-b8bc194a6043.png">  
+
+* Add a `roll_many` method to DRY up *game_spec.rb* loops  
+<img width="722" src="https://user-images.githubusercontent.com/1697198/94308909-dbdc7400-ff3c-11ea-8711-dbd1e10e4c99.png">
 
