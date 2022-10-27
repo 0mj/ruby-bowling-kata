@@ -117,3 +117,22 @@
   end
   ```
 + Run your specs & verify 0 examples, 0 failures `bundle exec rspec`  
+
+
+### Test 1: Gutter Game
+**RED**
+
+* Add the following test and verify that it fails with a `undefined method 'roll'`
+
+**GREEN**
+
+* Add the following to *game.rb* & verify that the test suite is green again
+  ```ruby
+  # frozen_string_literal: true
+
+  class Game
+    def roll(pins)
+    end
+  end
+  ```
+  
