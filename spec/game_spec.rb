@@ -29,7 +29,7 @@ RSpec.describe Game do
   end
 
   it "Rolling 12 rolls of 10 must score 300" do
-    roll_many(12, 10)
+    roll_many(12, Game::PINS)
     expect(game.score).to eq(300)
   end
 
