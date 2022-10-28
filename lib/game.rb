@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Game
-  PINS = 10
   FRAMES = 10
+  PINS = 10
 
   def initialize
     @rolls = []
@@ -13,8 +13,8 @@ class Game
   end
 
   def score
-    frame_index = 0
     result = 0
+    frame_index = 0
 
     FRAMES.times do
       if strike?(frame_index)
@@ -28,6 +28,7 @@ class Game
         frame_index += 2
       end
     end
+
     result
   end
 
@@ -38,7 +39,7 @@ class Game
   end
 
   def spare_bonus(frame_index)
-    @rolls.fetch(frame_index + 2, 0)
+    @rolls.fetch(frame_index + 2)
   end
 
   def strike?(frame_index)
