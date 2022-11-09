@@ -39,7 +39,7 @@ class Game
   end
 
   def spare_bonus(frame_index)
-    @rolls.fetch(frame_index + 2)
+    @rolls.fetch(frame_index + 2, 0)
   end
 
   def strike?(frame_index)
