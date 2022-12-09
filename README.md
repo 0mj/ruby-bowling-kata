@@ -84,6 +84,15 @@
 **RED**
 
 * Add the following test and verify that it fails with a `undefined method 'roll'`
+  ```ruby
+  it "rolling 20 rolls of 0 must score 0" do
+    game = Game.new
+    20.times do
+      game.roll(0)
+    end
+  end
+  ```
+  
 
 **GREEN**
 
