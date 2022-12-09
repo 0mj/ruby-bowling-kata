@@ -8,6 +8,7 @@ RSpec.describe Game do
     20.times do
       game.roll(0)
     end
+    expect(game.score).to eq(0)
   end
-  
+
 end
