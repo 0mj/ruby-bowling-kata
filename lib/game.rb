@@ -12,5 +12,4 @@ class Game
   def score
     @rolls.sum
   end
-
 end
