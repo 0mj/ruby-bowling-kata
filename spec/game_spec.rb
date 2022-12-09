@@ -11,4 +11,16 @@ RSpec.describe Game do
     expect(game.score).to eq(0)
   end
 
+  # 2 Gutters x10 Ones x10 must score 10
+  it "rolling 10 rolls of 0 and 10 rolls of 1 must score 10" do
+    game = Game.new
+    10.times do
+      game.roll(0)
+    end
+    10.times do
+      game.roll(1)
+    end
+    expect(game.score).to eq(10)
+  end
+
 end
