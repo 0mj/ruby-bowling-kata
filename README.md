@@ -9,9 +9,8 @@
 
 #### Creating Directory & Open (Powershell)
 
-+ `Set-Location -Path $HOME`  
-`Remove-Item -Recurse -Force -Path "$HOME\code\ruby-bowling-kata"`  
-+ Re-create the directory. `New-Item -ItemType Directory -Path "C:\Users\mj6409\code\ruby-bowling-kata" -Force`  
++ `Remove-Item -Recurse -Force -Path "\code\ruby-bowling-kata"`  
++ Re-create the directory. `New-Item -ItemType Directory -Path "\code\ruby-bowling-kata" -Force`  
 + Open the directory as a project in your editor of choice. `code .`
 
   
@@ -35,7 +34,7 @@
   ```
 
 + Verify spec is red (failing) because it doesn't know what a Game is `ruby spec/bowling_test.rb`  
-+ Create *lib/bowling.rb* `New-Item -ItemType File -Path "lib/bowling.rb" -Force` & add the following
++ Create *lib/game.rb* `New-Item -ItemType File -Path "lib/game.rb" -Force` & add the following
   ```ruby
   class Game
   end
@@ -61,7 +60,7 @@
 
 **GREEN**
 
-* Add the following to *bowling.rb* & verify that the test suite is green again
+* Add the following to *game.rb* & verify that the test suite is green again
   ```ruby
   class Game
     def roll(pins)
@@ -71,36 +70,41 @@
 
 **RED**
 
-* Add ```ruby
+* Add 
+  ```ruby
   assert_equal 0, @game.score
-  ``` to *bowling_test.rb* & verify that it fails with a 
+  ```
+  to *bowling_test.rb* & verify that it fails with a 
   ```powershell
-    NoMethodError: undefined method `score' for #<Game:0x081ed3b0>
+    NoMethodError: undefined method score
   ```
 
   ```ruby
-  # frozen_string_literal: true
-
   require_relative "../lib/game"
-  RSpec.describe Game do
-    it "20 rolls of 0 must score 0" do
+  require "minitest/autorun"
+
+
+  class TestGame < Minitest::Test
+
+    # 20 rolls of 0 must score 0
+    def test_gutter_game
       game = Game.new
       20.times do
         game.roll(0)
       end
-      expect(game.score).to eq(0)
+      assert_equal 0, game.score
     end
+
   end
   ```
 
 **GREEN**
 
-* Update *bowling.rbo* & validate that the test passes.
+* Update *game.rb* & validate that the test passes.
   ```ruby
-  # frozen_string_literal: true
-
   class Game
-    def roll(pins); end
+    def roll(pins)
+    end
 
     def score
       0
@@ -111,12 +115,60 @@
 
 ### Test 2: 10 gutter balls & 10 rolls of 1
 **RED** 
-* Add the following spec and verify that it fails with `expected: 10 got: 0`  
-<img width="628" src="https://user-images.githubusercontent.com/1697198/94306717-12b08b00-ff39-11ea-991c-24d76a9fe2ff.png">
+* Add the following test and verify that it fails with `expected: 10 got: 0`  
+  ```ruby
+  require_relative "../lib/game"
+  require "minitest/autorun"
+
+
+  class TestGame < Minitest::Test
+
+    def setup
+      @game = Game.new
+    end
+
+    # 20 rolls of 0 must score 0
+    def test_gutter_game
+      
+      20.times do
+        @game.roll(0)
+      end
+      assert_equal 0, @game.score
+    end
+
+    # 10 rolls of 1 & 10 rolls of zero
+    def test_ten_ones_ten_gutters
+      10.times do
+        @game.roll(1)
+      end
+      10.times do 
+        @game.roll(0)
+      end
+      assert_equal 10, @game.score
+    end
+
+  end
+  ```
 
 **GREEN**
-* Update *bowling.rb* & verify that the spec passes  
-<img width="514" src="https://user-images.githubusercontent.com/1697198/94307137-cf0a5100-ff39-11ea-8ff1-e5b22f33f186.png">  
+* Update *game.rb* & verify that the spec passes  
+  ```ruby
+  class Game
+
+    def initialize
+      @rolls = []
+    end
+
+    def roll(pins)
+      @rolls << pins
+    end
+
+    def score
+      @rolls.sum
+    end
+
+  end
+  ```  
 
 **REFACTOR**
 * In *bowling_test.rb*, extract `game = Game.new` into an [RSpec let](https://relishapp.com/rspec/rspec-core/v/3-9/docs/helper-methods/let-and-let)  
@@ -135,7 +187,7 @@
 * Our code needs to be changed too much to make this test pass, so skip the test and validate that you have 2 passing tests & 1 skipped test.
 <img width="172" src="https://user-images.githubusercontent.com/1697198/94317966-0fbf9580-ff4d-11ea-957c-97a12649566f.png">  
 
-* Update *bowling.rb* so that it sums 2 rolls at a time. This will be needed for when we are looking at spares & strikes. Verify that your tests are not failing.
+* Update *game.rb* so that it sums 2 rolls at a time. This will be needed for when we are looking at spares & strikes. Verify that your tests are not failing.
 <img width="823" src="https://user-images.githubusercontent.com/1697198/94319043-6a59f100-ff4f-11ea-9d3c-ebe06b50626f.png">
 
 **RED(AGAIN)**
@@ -145,12 +197,12 @@
 
 **GREEN**
 
-* Update *bowling.rb* so that it tests for spares and applies the spare bonus. Verify that you have no failing tests
+* Update *game.rb* so that it tests for spares and applies the spare bonus. Verify that you have no failing tests
 <img width="1265" src="https://user-images.githubusercontent.com/1697198/94320175-ef460a00-ff51-11ea-9a4c-467dc6adae79.png">
 
 **REFACTOR**
 
-* In *bowling.rb* exptract the spare logic. Create an intention revealing predicate method. Ensure no failures.
+* In *game.rb* exptract the spare logic. Create an intention revealing predicate method. Ensure no failures.
 <img width="852" src="https://user-images.githubusercontent.com/1697198/94320418-7bf0c800-ff52-11ea-8087-1c52f2a78c47.png">
 
 * Eliminate a magic number and a comment by creating constants for `FRAMES` and `PINS`  
