@@ -21,19 +21,19 @@
 ## The Code
 
 ### Workflow
-+ Run tests: `ruby spec/bowling_test.rb`  
++ Run tests: `ruby spec/game_test.rb`  
 + Lint & Commit your code after each test ( native ruby linter? )
 
 ### Test 0: Create The Files
 **RED**
 
-+ Create the file *spec/bowling_test.rb* `New-Item -ItemType File -Path "spec\bowling_test.rb" -Force` & add the following
++ Create the file *spec/game_test.rb* `New-Item -ItemType File -Path "spec\game_test.rb" -Force` & add the following
   ```ruby
   class TestBowling < Minitest::Test
   end
   ```
 
-+ Verify spec is red (failing) because it doesn't know what a Game is `ruby spec/bowling_test.rb`  
++ Verify spec is red (failing) because it doesn't know what a Game is `ruby spec/game_test.rb`  
 + Create *lib/game.rb* `New-Item -ItemType File -Path "lib/game.rb" -Force` & add the following
   ```ruby
   class Game
@@ -41,16 +41,16 @@
   ```
 
 **GREEN**
-+ Update *spec/bowling_test.rb* so it looks like this..
++ Update *spec/game_test.rb* so it looks like this..
   ```ruby
-  require_relative "../lib/bowling"
+  require_relative "../lib/game"
   require "minitest/autorun"
   
   
   class TestBowling < Minitest::Test
   end 
   ```
-+ Run tests & verify 0 runs, 0 assertions, 0 failures, 0 errors, 0 skips `ruby spec/bowling_test.rb`  
++ Run tests & verify 0 runs, 0 assertions, 0 failures, 0 errors, 0 skips `ruby spec/game_test.rb`  
 
 
 ### Test 1: Gutter Game
@@ -74,7 +74,7 @@
   ```ruby
   assert_equal 0, @game.score
   ```
-  to *bowling_test.rb* & verify that it fails with a 
+  to *game_test.rb* & verify that it fails with a 
   ```powershell
     NoMethodError: undefined method score
   ```
@@ -171,7 +171,7 @@
   ```  
 
 **REFACTOR**
-* In *bowling_test.rb*  
+* In *game_test.rb*  
 ```ruby
   def setup
     @game = Game.new
@@ -179,7 +179,7 @@
 ```
 
 
-* Add a `roll_many` method to DRY up *bowling_test.rb* loops  
+* Add a `roll_many` method to DRY up *game_test.rb* loops  
 ```ruby
   def roll_many(rolls, pins)
     rolls.times do
@@ -285,7 +285,7 @@ class Game
   end
   ```
 
-* Create a `spare` method in *bowling_test.rb*  
+* Create a `spare` method in *game_test.rb*  
 ```ruby
   def roll_spare
     roll_many(2,5)
@@ -333,7 +333,7 @@ def score
 ```
 
 **REFACTOR**
-* Create `roll_strike` method in *bowling_test.rb*
+* Create `roll_strike` method in *game_test.rb*
 ```ruby
   def roll_strike
     @game.roll(10)
