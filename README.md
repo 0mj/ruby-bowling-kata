@@ -71,7 +71,13 @@
 
 **RED**
 
-* Add `expect(game.score).to eq(0)` to *bowling_test.rb* & verify that it fails with a `undefined method 'score'`
+* Add ```ruby
+  assert_equal 0, @game.score
+  ``` to *bowling_test.rb* & verify that it fails with a 
+  ```powershell
+    NoMethodError: undefined method `score' for #<Game:0x081ed3b0>
+  ```
+
   ```ruby
   # frozen_string_literal: true
 

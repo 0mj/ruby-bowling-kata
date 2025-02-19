@@ -1,4 +1,4 @@
-class Bowling
+class Game
 
   def roll(pins)
   end
