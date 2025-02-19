@@ -31,10 +31,31 @@ class TestGame < Minitest::Test
   end
 
   def test_spare
-    @game.roll(5)
-    @game.roll(5)
+    roll_spare
     @game.roll(3)
     assert_equal 16, @game.score
   end
+
+  def roll_spare
+    roll_many(2,5)
+  end
+
+  def test_strike
+    roll_strike
+    @game.roll(3)
+    @game.roll(4)
+    roll_many(16,0)
+    assert_equal 24, @game.score
+  end
+
+  def test_perfect_game
+    roll_many(12, Game::PINS)
+    assert_equal 300, @game.score
+  end
+
+  def roll_strike
+    @game.roll(Game::PINS)
+  end
+
 
 end

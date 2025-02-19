@@ -246,35 +246,117 @@
 **REFACTOR**
 
 * In *game.rb* exptract the spare logic. Create an intention revealing predicate method. Ensure no failures.
+```ruby
+  def score
+    result = 0
+    frame_index = 0
+
+    10.times do #Frames in a game
+      result += if spare?(frame_index)
+                  10 + @rolls.fetch(frame_index +2, 0) 
+                else
+                  @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0) 
+                end
+      frame_index += 2
+    end
+
+    result
+  end
+
+  private 
+
+  def spare?(frame_index)
+    @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0) == 10 #spare
+  end
+```
 
 * Eliminate a magic number and a comment by creating constants for `FRAMES` and `PINS`  
+```ruby
+class Game
+
+  FRAMES = 10
+  PINS   = 10 
+```
 
 * Extract the `spare_bonus` logic into its own method.
+```ruby
+  def spare_bonus(frame_index)
+    @rolls.fetch(frame_index + 2, 0)
+  end
+  ```
 
-* Create a `spare` method in *bowling_test.rb*
+* Create a `spare` method in *bowling_test.rb*  
+```ruby
+  def roll_spare
+    roll_many(2,5)
+  end
+  ```
 
 
 ### Test 4: Strike
 **RED**
 * Add the following spec and verify that it fails with `expected: 24 got: 17`
-
+```ruby
+  def test_strike
+    @game.roll(10)
+    @game.roll(3)
+    @game.roll(4)
+    roll_many(16,0)
+    assert_equal 24, @game.score
+  end
+  ```
 
 
 **GREEN**
 * Account for strikes in `Game#score` and ensure your tests are passing.
+```ruby
+def score
+    result = 0
+    frame_index = 0
 
+    FRAMES.times do #Frames in a game
+      if @rolls.fetch(frame_index, 0) == PINS #strike!
+        result += PINS + @rolls.fetch(frame_index + 1, 0) + @rolls.fetch(frame_index + 2, 0) # strike bonus adds next to balls
+        frame_index += 1
+      elsif spare?(frame_index)
+        result += PINS + spare_bonus(frame_index) 
+        frame_index += 2
+      else
+        result += @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0) 
+        frame_index += 2
+      end
+      
+    end
+
+    result
+  end
+```
 
 **REFACTOR**
 * Create `roll_strike` method in *bowling_test.rb*
-
+```ruby
+  def roll_strike
+    @game.roll(10)
+  end
+```
 
 * Extract intention revealing predicate method, `Game#strike?`
+```ruby
+  private 
 
+  def strike?(frame_index)
+    @rolls.fetch(frame_index, 0) == PINS #strike!
+  end
+```
 
 
 
 * Extract `strike_bonus` logic into its own method
-
+```ruby
+  def strike_bonus(frame_index)
+    @rolls.fetch(frame_index + 1, 0) + @rolls.fetch(frame_index + 2, 0) # strike bonus adds next to balls
+  end
+```
 
 
 
@@ -282,6 +364,12 @@
 
 **JUST GREEN**
 * Add the following test & verify that it passes
+```ruby
+  def test_perfect_game
+    roll_many(12, Game::PINS)
+    assert_equal 300, @game.score
+  end
+  ```
 
 
 
