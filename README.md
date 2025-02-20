@@ -78,7 +78,7 @@ or `touch spec/game_test.rb`(Bash)
 
 * Add 
   ```ruby
-  assert_equal 0, @game.score
+  assert_equal 0, game.score
   ```
   to *game_test.rb* & verify that it fails with a 
   ```powershell
