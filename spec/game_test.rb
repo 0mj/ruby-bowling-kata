@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require_relative '../lib/game'
 
+
 class TestGame < MiniTest::Test
 
   def test_game_class_exists
@@ -8,4 +9,4 @@ class TestGame < MiniTest::Test
     assert_instance_of Game, game
   end
 
-end 
+end
