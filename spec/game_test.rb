@@ -1,5 +1,5 @@
-require_relative "../lib/game"
-require "minitest/autorun"
+require 'minitest/autorun'
+require_relative '../lib/game'
 
 class TestGame < MiniTest::Test
 
@@ -8,4 +8,4 @@ class TestGame < MiniTest::Test
     assert_instance_of Game, game
   end
 
-end
+end 
