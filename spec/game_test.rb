@@ -17,4 +17,15 @@ class TestGame < MiniTest::Test
     assert_equal 0, game.score
   end
 
+  # 10 rolls of 1 & 10 rolls of zero
+  def test_ten_ones_ten_gutters
+    10.times do
+      @game.roll(1)
+    end
+    10.times do 
+      @game.roll(0)
+    end
+    assert_equal 10, @game.score
+  end
+
 end
