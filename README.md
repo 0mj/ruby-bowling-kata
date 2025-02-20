@@ -63,6 +63,14 @@ or `touch spec/game_test.rb`(Bash)
 **RED**
 
 * Add the following test and verify that it fails with a `undefined method 'roll'`
+```ruby
+  def test_gutter_game
+    game = Game.new
+    20.times do
+      game.roll(0)
+    end
+  end
+  ```
 
 **GREEN**
 
