@@ -28,13 +28,13 @@ or `touch spec/game_test.rb`(Bash)
   ```ruby
   require "MiniTest/autorun"
 
-  class TestBowling < Minitest::Test
+  class TestGame < Minitest::Test
 
     def test_game_class_exists
       game = Game.new
       assert_instance_of Game, game
     end
-    
+
   end
   ```
 
@@ -51,7 +51,13 @@ or `touch spec/game_test.rb`(Bash)
   require_relative "../lib/game"
   require "minitest/autorun"
   
-  class TestBowling < Minitest::Test
+  class TestGame < Minitest::Test
+    
+    def test_game_class_exists
+      game = Game.new
+      assert_instance_of Game, game
+    end
+
   end 
   ```
 + Run tests & verify 0 runs, 0 assertions, 0 failures, 0 errors, 0 skips `ruby spec/game_test.rb`  
