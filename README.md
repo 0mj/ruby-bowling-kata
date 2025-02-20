@@ -164,12 +164,13 @@ end
 ```  
 
 **REFACTOR**
-* In *game_test.rb*  `setup` method in Minitest is a special method that runs before each test. The setup method is used to prepare the test environment. It runs before each individual test method in the test class. commonly used to initialize objects or set up any necessary state for the tests. 
+* In *game_test.rb* add the `setup` method from Minitest.  It runs before each test, prepares the test environment and is commonly used to initialize objects or set state for the tests.   
 ```ruby
 def setup
   @game = Game.new
 end
 ```
++ replace `game` variables with the global `@game` throughout *game_test.rb*
 
 
 * Add a `roll_many` method to DRY up *game_test.rb* loops  
@@ -238,7 +239,7 @@ end
 
 **REFACTOR**
 
-* In *game.rb* exptract the spare logic. Create an intention revealing predicate method. Ensure no failures.
+* In *game.rb* extract the spare logic. Create an intention revealing predicate method. Ensure no failures.
 ```ruby
 def score
   result = 0
@@ -268,7 +269,7 @@ end
 class Game
 
   FRAMES = 10
-  PINS   = 10 
+  PINS   = 10   
 ```
 
 * Extract the `spare_bonus` logic into its own method.
@@ -288,7 +289,7 @@ end
 
 ### Test 4: Strike
 **RED**
-* Add the following spec and verify that it fails with `expected: 24 got: 17`
+* Add the following test and verify that it fails with `expected: 24 got: 17`
 ```ruby
 def test_strike
   @game.roll(10)
