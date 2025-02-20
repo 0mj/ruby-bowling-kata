@@ -1,3 +1,4 @@
+require_relative "../lib/game"
 require "minitest/autorun"
 
 class TestGame < MiniTest::Test
