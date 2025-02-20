@@ -7,15 +7,10 @@
 + `Remove-Item -Recurse -Force -Path "\code\ruby-bowling-kata"` (Powershell)  
 + `rm -rf ruby-bowling-kata`(Bash)  
 + Re-create the directory. `New-Item -ItemType Directory -Path "\code\ruby-bowling-kata" -Force`  
-+ `mkdir ruby-bowling-kdata`(Bash)  
++ `mkdir ruby-bowling-kata`(Bash)  
 + Open the directory as a project in your editor of choice. `code .` (Bash & Powershell)
 
-#### Project Setup
- 
-  
-## The Code
-
-### Workflow
+#### Project Setup & Code Workflow
 + Run tests: `ruby spec/game_test.rb` (powershell)
 + Lint & Commit your code after each test ( native ruby linter? )
 
