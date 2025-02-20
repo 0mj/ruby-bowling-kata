@@ -22,9 +22,19 @@
 ### Test 0: Create The Files
 **RED**
 
-+ Whilst inside the ruby-bowling-kata directory create file *spec/game_test.rb* `New-Item -ItemType File -Path "spec\game_test.rb" -Force` & add the following
++ Inside *ruby-bowling-kata* directory create file *spec/game_test.rb* `New-Item -ItemType File -Path "spec\game_test.rb" -Force`(powershell)  
+or `touch spec/game_test.rb`(Bash)  
+& add the following
   ```ruby
+  require "MiniTest/autorun"
+
   class TestBowling < Minitest::Test
+
+    def test_game_class_exists
+      game = Game.new
+      assert_instance_of Game, game
+    end
+    
   end
   ```
 
