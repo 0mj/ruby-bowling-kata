@@ -84,22 +84,12 @@ end
 
 **RED**
 
-* Add 
+* Make your test fail again. Assert that game score must equal 0.  Add the following to *spec/game_test.rb*
 ```ruby
 assert_equal 0, game.score
 ```
-to *game_test.rb* & verify that it fails with a 
-```powershell
-  NoMethodError: undefined method score
-```
-
+* Run test and verify it fails with a `NoMethodError: undefined method score`  Test method should look like the following:
 ```ruby
-require_relative "../lib/game"
-require "minitest/autorun"
-
-
-class TestGame < Minitest::Test
-
   # 20 rolls of 0 must score 0
   def test_gutter_game
     game = Game.new
@@ -108,8 +98,6 @@ class TestGame < Minitest::Test
     end
     assert_equal 0, game.score
   end
-
-end
 ```
 
 **GREEN**
