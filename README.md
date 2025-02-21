@@ -15,7 +15,7 @@ Re-create the directory. `New-Item -ItemType Directory -Path "ruby-bowling-kata"
 + Run tests: `ruby spec/game_test.rb` (powershell)
 + Lint & Commit your code after each test ( native ruby linter? )
 
-### Test 0: Create The Files
+## Test 0: Create The Files
 **RED**
 
 + Inside *ruby-bowling-kata* directory create file *spec/game_test.rb* `New-Item -ItemType File -Path "spec\game_test.rb" -Force`(powershell)  
@@ -59,7 +59,7 @@ end
 + Run tests & verify 0 runs, 0 assertions, 0 failures, 0 errors, 0 skips `ruby spec/game_test.rb`  
 
 
-### Test 1: Gutter Game
+## Test 1: Gutter Game
 **RED**
 
 * Add the following test and verify that it fails with a `undefined method 'roll'`
@@ -127,7 +127,7 @@ end
 ``` 
 
 
-### Test 2: 10 gutter balls & 10 rolls of 1
+## Test 2: 10 gutter balls & 10 rolls of 1
 **RED** 
 * Add the following test to *spec/game_test.rb* and verify that it fails with `expected: 10 got: 0`  
 ```ruby
@@ -182,7 +182,7 @@ def roll_many(rolls, pins)
 end
 ```
 
-### Test 3: Picking Up a Spare
+## Test 3: Picking Up a Spare
 
 **RED**
 * Add the following test and confirm that it fails with a `expected: 16 got: 13`  
@@ -287,7 +287,7 @@ end
 ```
 
 
-### Test 4: Strike
+## Test 4: Strike
 **RED**
 * Add the following test and verify that it fails with `expected: 24 got: 17`
 ```ruby
@@ -354,7 +354,7 @@ end
 
 
 
-### Test 5: The Perfect Game
+## Test 5: The Perfect Game
 
 **JUST GREEN**
 * Add the following test & verify that it passes
