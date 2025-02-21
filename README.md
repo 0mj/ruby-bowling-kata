@@ -30,7 +30,7 @@ or
 + Inside *ruby-bowling-kata* directory create file *spec/game_test.rb*  
 `New-Item -ItemType File -Path "spec\game_test.rb" -Force`(powershell)    
 or `touch spec/game_test.rb`(Bash)  
-& add the following
+& add the following method `test_game_class_exists` to verify your test sees the `Game` class.
 ```ruby
 require "MiniTest/autorun"
 
@@ -63,7 +63,7 @@ end
 ```
 
 **GREEN**
-+ Update *spec/game_test.rb* so it looks like this..
++ Update *spec/game_test.rb* with `require_relative '../lib/game'` ..
 ```ruby
 require_relative "../lib/game"
 require "minitest/autorun"
