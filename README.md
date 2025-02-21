@@ -4,11 +4,20 @@
 
 #### Creating Directory & Open
 
-Remove previous practice..  
+**Remove previous practice**
 + `Remove-Item -Recurse -Force -Path "ruby-bowling-kata"` (Powershell)  
 + `rm -rf ruby-bowling-kata`(Bash)  
-Re-create the directory. `New-Item -ItemType Directory -Path "ruby-bowling-kata" -Force`  
+**Create directory.**  
+`New-Item -ItemType Directory -Path "ruby-bowling-kata" -Force`  
 + `mkdir ruby-bowling-kata`(Bash)  
+ 
++ Change directory and create *spec* directory   
+`cd ruby-bowling-kata`  
+ 
+`New-Item -ItemType Directory -Path "spec" -Force`  
+or  
+`mkdir spec`(Bash)  
+
 + Open the directory as a project in your editor of choice. `code .` (Bash & Powershell)
 
 #### Project Setup & Code Workflow
@@ -18,9 +27,10 @@ Re-create the directory. `New-Item -ItemType Directory -Path "ruby-bowling-kata"
 ## Test 0: Create The Files
 **RED**
 
-+ Inside *ruby-bowling-kata* directory create file *spec/game_test.rb* `New-Item -ItemType File -Path "spec\game_test.rb" -Force`(powershell)  
++ Inside *ruby-bowling-kata* directory create file *spec/game_test.rb*  
+`New-Item -ItemType File -Path "spec\game_test.rb" -Force`(powershell)    
 or `touch spec/game_test.rb`(Bash)  
-& add the following
+& add the following method `test_game_class_exists` to verify your test sees the `Game` class.
 ```ruby
 require "MiniTest/autorun"
 
@@ -34,15 +44,26 @@ class TestGame < Minitest::Test
 end
 ```
 
-+ Verify spec(test) is failing because it doesn't know what a Game is `ruby spec/game_test.rb`  
-+ Create *lib/game.rb* `New-Item -ItemType File -Path "lib/game.rb" -Force` & add the following
++ Verify spec(test) is failing because it doesn't know what a Game is  
+`ruby spec/game_test.rb`  
++ Create *lib* directory  
+Within and *ruby-bowling-kata* create new *lib* directory  
+`New-Item -ItemType Directory -Path "lib" -Force`  
+or 
+`mkdir lib`(Bash) 
+
++ Create *lib/game.rb*  
+`New-Item -ItemType File -Path "lib/game.rb" -Force`  
+or
+`touch lib/game.rb`  
+& add the following to *game.rb*
 ```ruby
 class Game
 end
 ```
 
 **GREEN**
-+ Update *spec/game_test.rb* so it looks like this..
++ Update *spec/game_test.rb* with `require_relative '../lib/game'` ..
 ```ruby
 require_relative "../lib/game"
 require "minitest/autorun"
@@ -56,7 +77,8 @@ class TestGame < Minitest::Test
 
 end 
 ```
-+ Run tests & verify 0 runs, 0 assertions, 0 failures, 0 errors, 0 skips `ruby spec/game_test.rb`  
++ Run tests & verify 0 runs, 0 assertions, 0 failures, 0 errors, 0 skips  
+`ruby spec/game_test.rb`  
 
 
 ## Test 1: Gutter Game
@@ -267,7 +289,7 @@ def spare_bonus(frame_index)
 end
 ```
 
-* Create a `spare` method in *game_test.rb*  
+* Create a `spare` method in *game_test.rb*  and call it in `test_spare` replacing calls to `@game.roll(5)`
 ```ruby
 def roll_spare
   roll_many(2,5)
