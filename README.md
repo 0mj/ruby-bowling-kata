@@ -7,13 +7,13 @@
 **Remove previous practice**
 + `Remove-Item -Recurse -Force -Path "ruby-bowling-kata"` (Powershell)  
 + `rm -rf ruby-bowling-kata`(Bash)  
-**Re-create the directory.**  
+**Create directory.**  
 `New-Item -ItemType Directory -Path "ruby-bowling-kata" -Force`  
 + `mkdir ruby-bowling-kata`(Bash)  
-**Re-create sub directories.**  
-+ Change directory  
+ 
++ Change directory and create *spec* directory   
 `cd ruby-bowling-kata`  
-and create new directory..  
+ 
 `New-Item -ItemType Directory -Path "spec" -Force`  
 or  
 `mkdir spec`(Bash)  
@@ -77,7 +77,8 @@ class TestGame < Minitest::Test
 
 end 
 ```
-+ Run tests & verify 0 runs, 0 assertions, 0 failures, 0 errors, 0 skips `ruby spec/game_test.rb`  
++ Run tests & verify 0 runs, 0 assertions, 0 failures, 0 errors, 0 skips  
+`ruby spec/game_test.rb`  
 
 
 ## Test 1: Gutter Game
