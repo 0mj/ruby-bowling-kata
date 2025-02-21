@@ -4,11 +4,20 @@
 
 #### Creating Directory & Open
 
-Remove previous practice..  
+**Remove previous practice**
 + `Remove-Item -Recurse -Force -Path "ruby-bowling-kata"` (Powershell)  
 + `rm -rf ruby-bowling-kata`(Bash)  
-Re-create the directory. `New-Item -ItemType Directory -Path "ruby-bowling-kata" -Force`  
-+ `mkdir ruby-bowling-kata`(Bash)  
+**Re-create the directory.**  
+`New-Item -ItemType Directory -Path "ruby-bowling-kata" -Force`  
++ `mkdir ruby-bowling-kata`(Bash)
+**Re-create sub directories.**  
++ Change directory  
+`cd ruby-bowling-kata`  
+and create new directory..
+`New-Item -ItemType Directory -Path "spec" -Force`  
+or 
+`mkdir spec`(Bash)  
+
 + Open the directory as a project in your editor of choice. `code .` (Bash & Powershell)
 
 #### Project Setup & Code Workflow
@@ -18,7 +27,8 @@ Re-create the directory. `New-Item -ItemType Directory -Path "ruby-bowling-kata"
 ## Test 0: Create The Files
 **RED**
 
-+ Inside *ruby-bowling-kata* directory create file *spec/game_test.rb* `New-Item -ItemType File -Path "spec\game_test.rb" -Force`(powershell)  
++ Inside *ruby-bowling-kata* directory create file *spec/game_test.rb*  
+`New-Item -ItemType File -Path "spec\game_test.rb" -Force`(powershell)    
 or `touch spec/game_test.rb`(Bash)  
 & add the following
 ```ruby
@@ -34,8 +44,19 @@ class TestGame < Minitest::Test
 end
 ```
 
-+ Verify spec(test) is failing because it doesn't know what a Game is `ruby spec/game_test.rb`  
-+ Create *lib/game.rb* `New-Item -ItemType File -Path "lib/game.rb" -Force` & add the following
++ Verify spec(test) is failing because it doesn't know what a Game is  
+`ruby spec/game_test.rb`  
++ Create *lib* directory  
+Within and *ruby-bowling-kata* create new *lib* directory  
+`New-Item -ItemType Directory -Path "lib" -Force`  
+or 
+`mkdir lib`(Bash) 
+
++ Create *lib/game.rb*  
+`New-Item -ItemType File -Path "lib/game.rb" -Force`  
+or
+`touch lib/game.rb`  
+& add the following to *game.rb*
 ```ruby
 class Game
 end
