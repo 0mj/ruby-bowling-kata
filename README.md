@@ -115,19 +115,19 @@ end
 ``` 
 
 
-## Test 2: 10 gutter balls & 10 rolls of 1
+## Test 2:  10 gutter balls & 10 rolls of 1 must score 10
 **RED** 
 * Add the following test to *spec/game_test.rb* and verify that it fails with `expected: 10 got: 0`  
 ```ruby
 # 10 rolls of 1 & 10 rolls of zero
 def test_ten_ones_ten_gutters
   10.times do
-    @game.roll(1)
+    game.roll(1)
   end
   10.times do 
-    @game.roll(0)
+    game.roll(0)
   end
-  assert_equal 10, @game.score
+  assert_equal 10, game.score
 end
 ```
 
