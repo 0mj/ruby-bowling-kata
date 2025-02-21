@@ -8,4 +8,13 @@ class TestGame < MiniTest::Test
     assert_instance_of Game, game
   end
 
+  # 20 rolls of zer must score 0
+  def test_gutter_game
+    game = Game.new
+    20.times do
+      game.roll(0)
+    end
+    assert_equal 0, game.score
+  end
+
 end
