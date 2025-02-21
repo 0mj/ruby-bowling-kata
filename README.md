@@ -289,7 +289,7 @@ def spare_bonus(frame_index)
 end
 ```
 
-* Create a `spare` method in *game_test.rb*  
+* Create a `spare` method in *game_test.rb*  and call it in `test_spare` replacing calls to `@game.roll(5)`
 ```ruby
 def roll_spare
   roll_many(2,5)
