@@ -9,7 +9,7 @@
 + `rm -rf ruby-bowling-kata`(Bash)  
 **Re-create the directory.**  
 `New-Item -ItemType Directory -Path "ruby-bowling-kata" -Force`  
-+ `mkdir ruby-bowling-kata`(Bash)
++ `mkdir ruby-bowling-kata`(Bash)  
 **Re-create sub directories.**  
 + Change directory  
 `cd ruby-bowling-kata`  
