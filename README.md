@@ -13,9 +13,9 @@
 **Re-create sub directories.**  
 + Change directory  
 `cd ruby-bowling-kata`  
-and create new directory..
+and create new directory..  
 `New-Item -ItemType Directory -Path "spec" -Force`  
-or 
+or  
 `mkdir spec`(Bash)  
 
 + Open the directory as a project in your editor of choice. `code .` (Bash & Powershell)
