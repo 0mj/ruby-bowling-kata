@@ -84,11 +84,11 @@ end
 
 **RED**
 
-* Make your test fail again. Assert that game score must equal 0.  Add the following to *spec/game_test.rb*
+* Break your test by asserting game score must be 0.  Add the following to *spec/game_test.rb*
 ```ruby
 assert_equal 0, game.score
 ```
-* Run test and verify it fails with a `NoMethodError: undefined method score`  Test method should look like the following:
+* Run tests and verify it's failing with: `NoMethodError: undefined method score`  Test method `test_gutter_game` should look like..
 ```ruby
   # 20 rolls of 0 must score 0
   def test_gutter_game
