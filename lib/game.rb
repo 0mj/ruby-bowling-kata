@@ -16,7 +16,7 @@ class Game
     frame_index = 0
 
     FRAMES.times do
-     puts "Frame:#{frame_index} Score:#{result}"
+     
      if strike?(frame_index)
         result += strike_bonus(frame_index)
         frame_index += 1
@@ -27,7 +27,7 @@ class Game
         result += @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0)
         frame_index += 2
       end
-      
+      # puts "Frame:#{frame_index} Score:#{result}"
     end
     result
   end

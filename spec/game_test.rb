@@ -83,16 +83,28 @@ class TestGame < MiniTest::Test
   def test_sample_score_card
     @game.roll(7)
     @game.roll(2)
-    roll_spare
+
+    @game.roll(9)
+    @game.roll(1)
+
     roll_strike
+    
     roll_strike
+    
     @game.roll(9)
     @game.roll(0)
-    roll_spare
-    roll_spare
+    
+    @game.roll(8)
+    @game.roll(2)
+
+    @game.roll(7)
+    @game.roll(3)
+    
     roll_strike
+    
     @game.roll(9)
     @game.roll(0)
+    
     roll_strike
     @game.roll(8)
     @game.roll(1)
