@@ -74,12 +74,12 @@ class TestGame < MiniTest::Test
     assert_equal 30, @game.score
   end
 
-  <<-t7 
-  | Frame  | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     | 10       |
-  |--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|----------|
-  | Rolls  | 7  2  | 9  /  | X     | X     | 9  0  | 8  /  | 7  /  | X     | 9  0  | X  8  1  |
-  | Score  | 9     | 29    | 58    | 77    | 86    | 103   | 123   | 142   | 151   | 170      |
-  t7
+  
+  #| Frame  | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     | 10     |
+  #|--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|--------|
+  #| Rolls  | 7  2  | 9  /  | X     | X     | 9  0  | 8  /  | 7  /  | X     | 9  0  | X  8  1|
+  #| Score  | 9     | 29    | 58    | 77    | 86    | 103   | 123   | 142   | 151   | 170    |
+  
   def test_sample_score_card
     @game.roll(7)
     @game.roll(2)
@@ -111,7 +111,71 @@ class TestGame < MiniTest::Test
     assert_equal 170, @game.score
   end
 
+  def test_tenth_frame_strike_out
+    roll_many(18,0)
+    roll_strike
+    roll_strike
+    roll_strike
+    assert_equal 30, @game.score
+  end
 
+  def test_tenth_frame_spare
+    roll_many(18,0)
+    roll_spare
+    @game.roll(6)
+    assert_equal 16, @game.score
+  end
+
+  # Rolls: [10, 9,1, 10, 9,1, 10, 9,1, 10, 9,1, 10, 9,1]
+  # Score: 200 
+  def test_dutch_200
+    roll_strike
+    @game.roll(9)
+    @game.roll(1)
+    roll_strike
+    @game.roll(9)
+    @game.roll(1)
+    roll_strike
+    @game.roll(9)
+    @game.roll(1)
+    roll_strike
+    @game.roll(9)
+    @game.roll(1)
+    roll_strike
+    @game.roll(9)
+    @game.roll(1)
+    roll_strike
+    assert_equal 200, @game.score
+  end
+
+
+  # Rolls: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 9, 0]
+  # Score: 289
+  def test_almost_perfect
+    10.times do
+      roll_strike
+    end
+    @game.roll(9)
+    @game.roll(0)
+    assert_equal 288, @game.score
+  end
+
+
+  # Rolls: [10, | 0,0, | 10, |0,0, |10, | 0,0,| 10, |0,0,| 10, | 0,0]
+  # Score: 50
+  def test_alternating_strikes_misses
+    roll_strike
+    roll_many(2,0)
+    roll_strike
+    roll_many(2,0)
+    roll_strike
+    roll_many(2,0)
+    roll_strike
+    roll_many(2,0)
+    roll_strike
+    roll_many(2,0)
+    assert_equal 50, @game.score
+  end
 
 
   private
