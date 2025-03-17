@@ -24,15 +24,20 @@ class TestGame < MiniTest::Test
     roll_many(10, 0)
     assert_equal 10, @game.score
   end
+<<<<<<< Updated upstream
 
   # test 3 - spare. roll 5,5,3 & 17 gutters must score 16
+=======
+  
+>>>>>>> Stashed changes
   def test_spare
-    roll_spare
+    roll_two(8,2)
     @game.roll(3)
     roll_many(17,0)
     assert_equal 16, @game.score
   end
 
+<<<<<<< Updated upstream
   # test 3.1 - spare. roll 5,5,3, 14gutters 5,5,3 must score 32
   def test_spare_gutters_spare
     roll_spare
@@ -54,12 +59,27 @@ class TestGame < MiniTest::Test
   end
 
   # test 5 perfect game scores 300! 12 strikes!
+=======
+  def test_strike
+    @game.roll(Game::PINS)
+    @game.roll(3)
+    @game.roll(4)
+    roll_many(16,0)
+    assert_equal 24, @game.score
+  end
+>>>>>>> Stashed changes
   def test_perfect_game
     roll_many(12, Game::PINS)
     assert_equal 300, @game.score
   end
 
+<<<<<<< Updated upstream
   # t5.1 roll 16 gutters(8frames), roll strike, strike, strike, strike
+=======
+  # 0---------------------------------------------
+
+# t5.1 roll 16 gutters(8frames), roll strike, strike, strike, strike
+>>>>>>> Stashed changes
   def test_sixteen_gutters_four_strikes
     roll_many(16,0) # 8 frames
     roll_many(4, Game::PINS)
@@ -68,7 +88,11 @@ class TestGame < MiniTest::Test
 
   # test 6 roll spare, strike, 16 gutters must score 30
   def test_spare_strike_sixteen_gutters
+<<<<<<< Updated upstream
     roll_spare
+=======
+    roll_two(7,3)
+>>>>>>> Stashed changes
     roll_strike
     roll_many(16,0)
     assert_equal 30, @game.score
@@ -118,12 +142,21 @@ class TestGame < MiniTest::Test
     roll_strike
     assert_equal 30, @game.score
   end
+<<<<<<< Updated upstream
 
   def test_tenth_frame_spare
     roll_many(18,0)
     roll_spare
     @game.roll(6)
     assert_equal 16, @game.score
+=======
+  # spare in the 10th frame gives you one extra ball for bonus
+  def test_tenth_frame_spare
+    roll_many(18,0)
+    roll_two(8,2)
+    @game.roll(3)
+    assert_equal 13, @game.score
+>>>>>>> Stashed changes
   end
 
   # Rolls: [10, 9,1, 10, 9,1, 10, 9,1, 10, 9,1, 10, 9,1]
@@ -176,22 +209,35 @@ class TestGame < MiniTest::Test
     roll_many(2,0)
     assert_equal 50, @game.score
   end
+<<<<<<< Updated upstream
 
 
   private
 
+=======
+  # 0---------------------------------------------
+
+  private
+>>>>>>> Stashed changes
   def roll_many(rolls, pins)
     rolls.times do
       @game.roll(pins)
     end
   end
 
-  def roll_spare
-    roll_many(2,5)
+  def roll_two(roll_one, roll_two)
+    @game.roll(roll_one)
+    @game.roll(roll_two)
   end
-
   def roll_strike
     @game.roll(Game::PINS)
   end
 
+<<<<<<< Updated upstream
+  def roll_strike
+    @game.roll(Game::PINS)
+  end
+
+=======
+>>>>>>> Stashed changes
 end
