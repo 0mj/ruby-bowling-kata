@@ -180,7 +180,7 @@ def setup
   @game = Game.new
 end
 ```
-+ replace `game` variables with the global `@game` throughout *game_test.rb*
++ replace `game` variable with the instance variable `@game`  
 
 
 * Add a `roll_many` method to DRY up *game_test.rb* loops  
@@ -205,7 +205,7 @@ def test_spare
 end
 ```
 **REVERSE, GREEN, AND REFACTOR**
-* Our code needs to be changed too much to make this test pass, so skip the test and validate that you have 2 passing tests & 1 skipped test.
+* Our code needs to be changed too much to make this test pass, so skip the test(add an x in front of it like `xtest..`) and validate that you have 2 passing tests & 1 skipped test.
 
 * Update *game.rb* so that it sums 2 rolls at a time. This will be needed for when we are looking at spares & strikes. Verify that your tests are not failing.
 ```ruby
@@ -289,10 +289,11 @@ def spare_bonus(frame_index)
 end
 ```
 
-* Create a `spare` method in *game_test.rb*  and call it in `test_spare` replacing calls to `@game.roll(5)`
+* Create a `spare` method in *game_test.rb*  and call it in `test_spare` replacing calls to `@game.roll(5)` When calling this method ensure the two rolls sum to 10.
 ```ruby
-def roll_spare
-  roll_many(2,5)
+def roll_spare(roll_one, roll_two)
+  @game.roll(roll_one)
+  @game.roll(roll_two)
 end
 ```
 
@@ -340,7 +341,7 @@ end
 * Create `roll_strike` method in *game_test.rb*
 ```ruby
 def roll_strike
-  @game.roll(10)
+  @game.roll(Game::PINS)
 end
 ```
 
