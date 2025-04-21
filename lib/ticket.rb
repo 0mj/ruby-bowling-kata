@@ -1,3 +1,3 @@
 class Ticket
-  attr_writer :price
+  attr_accessor :price
 end
