@@ -4,7 +4,7 @@ Step 1: Red - Test for a Gutter Game
 
 We'll start with the simplest scenario: a gutter game (all rolls are 0).
 
-```
+```ruby
 class GameTest < Minitest::Test
   def setup
     @game = Game.new
@@ -35,7 +35,7 @@ Step 2: Green - Make the Gutter Game Test Pass
 
 Modify the calculate_score method to handle a gutter game:
 
-```
+```ruby
 class Game
   attr_accessor :rolls, :frames
   FRAMES = 10
@@ -78,7 +78,7 @@ Step 3: Red - Test for a Game with All Ones
 
 Now, let's test a game where each roll is 1.
 
-```
+```ruby
 def test_all_ones
   roll_many(20, 1)
   @game.calculate_score
@@ -92,7 +92,7 @@ Step 4: Red - Test for a Spare
 
 Let's introduce a spare. This is where things get more complex.
 
-```
+```ruby
 def test_spare
   roll_frame(5, 5) # Spare in the first frame
   roll_many(18, 1)
@@ -107,7 +107,7 @@ Step 5: Green - Make the Spare Test Pass
 
 Modify calculate_score to handle spares:
 
-```
+```ruby
 def calculate_score
   @frames.clear
   roll_index = 0
@@ -138,7 +138,7 @@ Step 6: Red - Test for a Strike
 
 Now, let's add a test for a strike.
 
-```
+```ruby
 def test_strike
   @game.roll(10) # Strike in the first frame
   roll_many(18, 1)
@@ -153,7 +153,7 @@ Step 7: Green - Make the Strike Test Pass
 
 Modify calculate_score to handle strikes:
 
-```
+```ruby
 def calculate_score
   @frames.clear
   roll_index = 0
@@ -188,7 +188,7 @@ Run test_strike. It should now pass.
 
 Step 8: Refactor
 
-```
+```ruby
 class Game
   attr_accessor :rolls, :frames
   FRAMES = 10
