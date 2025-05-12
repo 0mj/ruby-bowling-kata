@@ -1,8 +1,124 @@
-kay, let's try a more incremental approach. I'll provide a series of very small steps, with a corresponding test for each step.
+Used Google Gemini to help refactor to better represent a real bowling score card.
+
+
+
+#### RED Step 0: Setup Test File
+Ensure ability to instantiate `Game` 
+
+```ruby 
+require 'minitest/autorun'
+require_relative '../lib/game'
+
+class GameTest < Minitest::Test
+  def setup
+    @game = Game.new
+  end
+
+  def test_game_class_exists
+    assert_instance_of Game, @game
+  end
+end
+```
+#### GREEN Step 1 Create Game class file
+```ruby
+class Game
+end
+```
+#### RED Step 2 Add Gutter Game Test
+Add test to your `GameTest` class and verify it fails with "GameTest#test_gutter_game: NoMethodError: undefined method"
+```ruby
+def test_gutter_game
+  20.times do 
+    @game.roll(0)
+  end
+end
+```
+
+#### GREEN Step 3 Add Roll Method
+Add `#roll` method to `Game` class to get passing test
+```ruby
+class Game
+  def roll(pins)
+  end
+end
+```
+
+
+#### RED Step 4 Array exists test
+Add test to `GameTest` class to ensure `@frames` array exists and is empty. It should fail with: "NoMethodError: undefined method `frames` "
+
+```ruby
+def test_frames_array_exists
+  assert_instance_of Array, @game.frames
+  assert_empty @game.frames
+end
+```
+
+#### GREEN Step 5 add frames to Game class
+Add `attr_accessor` to `Game` class and create `@frames` instance variable and set it to an empty array.
+```ruby
+class Game
+  attr_accessor :frames
+
+  def initialize
+    @frames = []
+  end
+
+  def roll(pins)
+  end
+end
+```
+#### Refactor
+Add `#roll_many` method to `GameTest` class.
+```ruby
+private
+def roll_many(rolls, pins)
+  rolls.times do
+    @game.roll(pins)
+  end
+end
+```
+  Refactor `#test_gutter_game` method
+```ruby
+def test_gutter_game
+  roll_many(20,0)
+end
+```
+
+
+
+#### RED Step 6 Frame structure
+Now that we have `@frames` array, let's ensure it has the basic structure we need for each frame.
+Add following test to `GameTest` class.  It should fail with "Should have 10 frames.
+Expected: 10
+  Actual: 0"
+```ruby
+def test_frames_array_structure
+  assert_equal 10, @game.frames.size, "Should have 10 frames"
+  @game.frames.each do |frame|
+    assert_equal [:frame, :type, :rolls, :score].sort, frame.keys.sort, "Frame should have keys: :frame, :type, :rolls, :score"
+    assert_instance_of Integer, frame[:frame], "Frame number should be an Integer"
+    assert_instance_of Symbol, frame[:type], "Frame type should be a Symbol"
+    assert_instance_of Array, frame[:rolls], "Rolls should be an Array"
+    assert_instance_of Integer, frame[:score], "Score should be an Integer"
+  end
+end
+```
+#### GREEN Step 7 Generate frames 
+Add to `@frames` array by adding a `#calculate_score` method to the `Game` class
+```ruby
+def calculate_score
+  @frames.clear
+  FRAMES.times do |frame_number|
+    @frames << { frame: frame_number + 1, type: :open, rolls: [], score: 0 }
+  end
+  calculate_tenth_frame_score
+end
+```
 
 Step 1: Red - Test for a Gutter Game
 
-We'll start with the simplest scenario: a gutter game (all rolls are 0).
+We'll start with the simplest scenario: a gutter game (all rolls are 0). But wait how / what's going on with `@game.frames` ? 
 
 ```ruby
 class GameTest < Minitest::Test
