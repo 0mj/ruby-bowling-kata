@@ -2,7 +2,7 @@ Refactored to mimic real bowling score card.
 
 
 
-#### Step 01: Create Test Class and Require 
+### 1 Create Test Class and Require 
 Create new test file `game_test.rb` and add following code and save.
 ```ruby
 require 'minitest/autorun'
@@ -13,7 +13,7 @@ end
 
 
 
-#### Step 02: Create Game class file
+### 2: Create Game class file
 Create `Game` class file in lib directory `lib/game.rb`
 ```ruby
 class Game
@@ -22,7 +22,7 @@ end
 
 
 
-#### RED Step 03 Instantiate Game
+### 3 RED Instantiate Game
 Attempt to instantiate the Game class from you test file and run it.  
 Add the following test to your `GameTest` class and verify it fails with "Error: `GameTest#test_game_class_exists`: NameError: uninitialized constant `GameTest::Game`"
 ```ruby
@@ -37,7 +37,7 @@ end
 
 
 
-#### GREEN Step 04 Create Game & Require
+### 4 GREEN Create Game & Require
 Create `Game` class file
 ```ruby
 class Game
@@ -59,7 +59,7 @@ end
 
 
 
-#### Step 05 Refactor
+### 5 Refactor
 Add a `setup` method to create a new instance variable of `@game` to each test.  Update `game` variable to the instance variable `@game`
 ```ruby
   def setup
@@ -73,7 +73,7 @@ Add a `setup` method to create a new instance variable of `@game` to each test. 
         
 
 
-#### RED Step 06 Gutter Game
+### 6 RED Gutter Game
 Add gutter game test to  `GameTest` class. Verify it fails with "  1) Error: GameTest#test_gutter_game: NoMethodError: undefined method 'roll' "
 ```ruby
 def test_gutter_game
@@ -85,7 +85,7 @@ end
 
 
 
-#### GREEN Step 07 Add #roll Method
+### 7 GREEN Add #roll Method
 Add `#roll` method to the `Game` class to get passing test
 ```ruby
 class Game
@@ -95,7 +95,7 @@ end
 ```
 
 
-#### RED Step 08 #score the gutter game
+### 8 RED #score the gutter game
 Add `assert_equal 0, @game.score` to the gutter game test.  Verify it fails with "Error: GameTest#test_gutter_game: NoMethodError: undefined method 'score' "
 ```ruby
 def test_gutter_game
@@ -108,7 +108,7 @@ end
 
 
 
-#### GREEN Step 09 Define #score method
+### 9 GREEN Define #score method
 Define the `#score` method and simply return a zero to make the test pass.
 ```ruby
 class Game
@@ -123,7 +123,7 @@ end
 
 
 
-#### Refactor Step 10 
+### 10 Refactor
 Add `#roll_many` method to `GameTest` class.
 ```ruby
 private
@@ -142,7 +142,7 @@ end
 
 
 
-#### RED Step 11 Open Frame Bowler
+### 11 RED Open Frame Bowler
 Add open frame bowler test. They roll 4,3  5,3  6,1  and 14 gutters.  Should result in score of 22. Verify it fails with "`Expected: 22 Actual: 0`"
 ```ruby
 def test_open_frame_bowler
@@ -157,7 +157,7 @@ def test_open_frame_bowler
 end
 ```
 
-#### GREEN Step 12 Sum the rolls
+### 12 GREEN Sum the rolls
 Adjust Game class initializing a `@rolls` array when a `Game` object is created, push (<<) `pins` into `@rolls` array within the `#roll` method and finally sum the `@rolls` array in `#score` method:
 ```ruby
 class Game
@@ -176,7 +176,7 @@ end
 
 
 
-#### Refactor Step 13 
+### 13 Refactor
 Add `#roll_frame` method to `GameTest` class.
 ```ruby
 private
@@ -198,7 +198,7 @@ end
 
 
 
-#### RED Step 14 Spare Test
+### 14 RED Spare Test
 Add `#test_spare` test method to your GameTest.  It should fail with `"Expected: 26 Actual: 19"`
 ```ruby
 def test_spare
@@ -211,7 +211,7 @@ end
 
 
 
-#### Still RED Step 15 
+### 15 Still RED
 Lots of refactoring to account for the spare, so let's comment out that test for now.  
 Break out `#score` method to individually add each roll and add it to the result which will be the bowlers total score.
 ```ruby
@@ -228,7 +228,7 @@ end
 ```
 
 
-#### GREEEN Spare logic 16
+### 16 GREEEN Spare
 We'll need to account for a bonus ball in the scoring of a spare. [9,1] + next roll.  
 10 + 7 = 17  
 7 + 2  = 9    
@@ -253,7 +253,7 @@ end
 
 
 
-#### Refactor 17
+### 17 Refactor
 replace the literal `10`'s with new constants `FRAMES` and `PINS` Constants centralize configuration and make your code more adaptable to future changes.  
 create intention revealing predicate method `#spare?` moving the spare logic within it  
 create `#spare_bonus` method  and move logic into it  
@@ -296,7 +296,7 @@ end
 
 
 
-#### RED Again 18 Strike Test
+### 18 RED Strike Test
 In bowling when strike is rolled that frame score is equal to the strike + next 2 rolls (bonus balls)  
 Add the following test to your GameTest class.  Ensure it fails with `"Expected: 28 Actual: 19"`
 ```ruby
@@ -310,7 +310,7 @@ end
 
 
 
-#### GREEN 19 Account for strike bonus balls
+### 19 GREEN strike bonus balls
 Adjust the `#score` method to account for strikes AND add the next 2 rolls to 10 to get the correct score.
 ```ruby
 def score
@@ -336,7 +336,7 @@ def score
 
 
 
-#### REFACTOR 20 
+### 20 REFACTOR
 create intention revealing predicate method `#strike?` moving the strike logic within it  
 create `#strike_bonus` method  and move logic into it  
 adjust `#score` method ..
@@ -387,7 +387,7 @@ end
 
 
 
-#### GREEN 21 TEST Perfect Game
+### 21 GREEN Perfect Game
 Add following perfect game test and verify it passes.  
 ```ruby
 def test_perfect_game
