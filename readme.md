@@ -1,15 +1,33 @@
-Used Google Gemini to help refactor to better represent a real bowling score card.
+Refactored to mimic real bowling score card.
 
+#### RED Step 01: Create Test Class and Require 
+Create new test file `game_test.rb` and add following code and save.
+```ruby
+require 'minitest/autorun'
 
+class GameTest < Minitest::Test
+end
+```
 
-#### RED Step 0: Setup Test File
-Ensure ability to instantiate `Game` 
+#### RED Still: Step 000: 
+Create `Game` class file
+```ruby
+class Game
+end
+```
 
-```ruby 
+#### GREEN Require Game
+Add `require_relative` for the `Game` class file.  Run this `ruby <testFile> name` in your console
+```ruby
 require 'minitest/autorun'
 require_relative '../lib/game'
 
 class GameTest < Minitest::Test
+end
+```
+#### RED Step 0: Setup Test File
+Ensure ability to instantiate `Game` 
+```ruby
   def setup
     @game = Game.new
   end
@@ -17,7 +35,6 @@ class GameTest < Minitest::Test
   def test_game_class_exists
     assert_instance_of Game, @game
   end
-end
 ```
 #### GREEN Step 1 Create Game class file
 ```ruby
@@ -44,7 +61,7 @@ end
 ```
 
 
-#### RED Step 4 Array exists test
+#### RED Step 4 Game Frames Array exists? 
 Add test to `GameTest` class to ensure `@frames` array exists and is empty. It should fail with: "NoMethodError: undefined method `frames` "
 
 ```ruby
@@ -54,7 +71,7 @@ def test_frames_array_exists
 end
 ```
 
-#### GREEN Step 5 add frames to Game class
+#### GREEN Step 5 Add Instance Variable `@frames` array
 Add `attr_accessor` to `Game` class and create `@frames` instance variable and set it to an empty array.
 ```ruby
 class Game
@@ -78,7 +95,7 @@ def roll_many(rolls, pins)
   end
 end
 ```
-  Refactor `#test_gutter_game` method
+  Refactor `#test_gutter_game` method replacing the `20.times .. ` loop
 ```ruby
 def test_gutter_game
   roll_many(20,0)
@@ -87,34 +104,65 @@ end
 
 
 
-#### RED Step 6 Frame structure
-Now that we have `@frames` array, let's ensure it has the basic structure we need for each frame.
-Add following test to `GameTest` class.  It should fail with "Should have 10 frames.
+#### RED Step 6 Test we have 10 Frames
+Now that we have `@frames` array, let's ensure there are 10 frames
+Add following test to `GameTest` class, run it and it should fail with "Should have 10 frames.
 Expected: 10
   Actual: 0"
 ```ruby
-def test_frames_array_structure
+def test_for_ten_frames
+  roll_many(20,0)
+  @game.score
   assert_equal 10, @game.frames.size, "Should have 10 frames"
-  @game.frames.each do |frame|
-    assert_equal [:frame, :type, :rolls, :score].sort, frame.keys.sort, "Frame should have keys: :frame, :type, :rolls, :score"
-    assert_instance_of Integer, frame[:frame], "Frame number should be an Integer"
-    assert_instance_of Symbol, frame[:type], "Frame type should be a Symbol"
-    assert_instance_of Array, frame[:rolls], "Rolls should be an Array"
-    assert_instance_of Integer, frame[:score], "Score should be an Integer"
+end
+```
+
+#### GREEN Step 7 Add FRAMES constant & #score method
+Add a `FRAMES` constant to top of `Game` class.  
+Add `#score` method which iterates our integer `FRAMES` constant, adding a `:frame` hash and number value to `@frames` array.
+```ruby
+FRAMES = 10
+#..
+def score
+  @frames.clear
+  FRAMES.times do |frame_number|
+    @frames << { frame: frame_number + 1 }
   end
 end
 ```
-#### GREEN Step 7 Generate frames 
-Add to `@frames` array by adding a `#calculate_score` method to the `Game` class
+
+
+
+
+
+#### GREEN Step 7 Add some rolls & call score
+Call `roll_many` method to add rolls to an instance of `Game` class.  
+Call `#score` method to 
 ```ruby
 def calculate_score
   @frames.clear
   FRAMES.times do |frame_number|
     @frames << { frame: frame_number + 1, type: :open, rolls: [], score: 0 }
   end
-  calculate_tenth_frame_score
 end
 ```
+
+
+
+
+
+
+#### GREEN Step 7 #calculate_score method
+Add `#calculate_score` method to the `Game` class
+```ruby
+def calculate_score
+  @frames.clear
+  FRAMES.times do |frame_number|
+    @frames << { frame: frame_number + 1, type: :open, rolls: [], score: 0 }
+  end
+end
+```
+
 
 Step 1: Red - Test for a Gutter Game
 
