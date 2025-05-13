@@ -1,6 +1,8 @@
 Refactored to mimic real bowling score card.
 
-#### RED Step 01: Create Test Class and Require 
+
+
+#### Step 01: Create Test Class and Require 
 Create new test file `game_test.rb` and add following code and save.
 ```ruby
 require 'minitest/autorun'
@@ -9,24 +11,56 @@ class GameTest < Minitest::Test
 end
 ```
 
-#### RED Still: Step 000: 
-Create `Game` class file
+
+
+#### Step 02: Create Game class file
+Create `Game` class file in lib directory `lib/game.rb`
 ```ruby
 class Game
 end
 ```
 
-#### GREEN Require Game
-Add `require_relative` for the `Game` class file.  Run this `ruby <testFile> name` in your console
+
+
+#### RED Step 03 Instantiate Game
+Attempt to instantiate the Game class from you test file and run it.  
+Add the following test to your `GameTest` class and verify it fails with "Error: `GameTest#test_game_class_exists`: NameError: uninitialized constant `GameTest::Game`"
+```ruby
+require 'minitest/autorun'
+
+class GameTest < Minitest::Test
+  def test_game_class_exists
+    game = Game.new
+  end
+end
+```
+
+
+
+#### GREEN Step 04 Create Game & Require
+Create `Game` class file
+```ruby
+class Game
+end
+```
+Add `require_relative` for the `Game` class in your test file  `game_test.rb` 
 ```ruby
 require 'minitest/autorun'
 require_relative '../lib/game'
 
 class GameTest < Minitest::Test
+  def test_game_class_exists
+    game = Game.new
+    assert_instance_of Game, game
+  end
 end
 ```
-#### RED Step 0: Setup Test File
-Ensure ability to instantiate `Game` 
+
+
+
+
+#### Step 05 Refactor
+Add a `setup` method to create a new instance variable of `@game` to each test.  Update `game` variable to the instance variable `@game`
 ```ruby
   def setup
     @game = Game.new
@@ -36,13 +70,11 @@ Ensure ability to instantiate `Game`
     assert_instance_of Game, @game
   end
 ```
-#### GREEN Step 1 Create Game class file
-```ruby
-class Game
-end
-```
-#### RED Step 2 Add Gutter Game Test
-Add test to your `GameTest` class and verify it fails with "GameTest#test_gutter_game: NoMethodError: undefined method"
+        
+
+
+#### RED Step 06 Gutter Game
+Add gutter game test to  `GameTest` class. Verify it fails with "  1) Error: GameTest#test_gutter_game: NoMethodError: undefined method 'roll' "
 ```ruby
 def test_gutter_game
   20.times do 
@@ -51,8 +83,10 @@ def test_gutter_game
 end
 ```
 
-#### GREEN Step 3 Add Roll Method
-Add `#roll` method to `Game` class to get passing test
+
+
+#### GREEN Step 07 Add #roll Method
+Add `#roll` method to the `Game` class to get passing test
 ```ruby
 class Game
   def roll(pins)
@@ -61,31 +95,35 @@ end
 ```
 
 
-#### RED Step 4 Game Frames Array exists? 
-Add test to `GameTest` class to ensure `@frames` array exists and is empty. It should fail with: "NoMethodError: undefined method `frames` "
-
+#### RED Step 08 #score the gutter game
+Add `assert_equal 0, @game.score` to the gutter game test.  Verify it fails with "Error: GameTest#test_gutter_game: NoMethodError: undefined method 'score' "
 ```ruby
-def test_frames_array_exists
-  assert_instance_of Array, @game.frames
-  assert_empty @game.frames
+def test_gutter_game
+  20.times do 
+    @game.roll(0)
+  end
+  assert_equal 0, @game.score
 end
 ```
 
-#### GREEN Step 5 Add Instance Variable `@frames` array
-Add `attr_accessor` to `Game` class and create `@frames` instance variable and set it to an empty array.
+
+
+#### GREEN Step 09 Define #score method
+Define the `#score` method and simply return a zero to make the test pass.
 ```ruby
 class Game
-  attr_accessor :frames
-
-  def initialize
-    @frames = []
+  def roll(pins)
   end
 
-  def roll(pins)
+  def score
+    0
   end
 end
 ```
-#### Refactor
+
+
+
+#### Refactor Step 10 
 Add `#roll_many` method to `GameTest` class.
 ```ruby
 private
@@ -95,7 +133,7 @@ def roll_many(rolls, pins)
   end
 end
 ```
-  Refactor `#test_gutter_game` method replacing the `20.times .. ` loop
+Refactor `#test_gutter_game` method replacing the `20.times .. ` loop
 ```ruby
 def test_gutter_game
   roll_many(20,0)
@@ -104,45 +142,33 @@ end
 
 
 
-#### RED Step 6 Test we have 10 Frames
-Now that we have `@frames` array, let's ensure there are 10 frames
-Add following test to `GameTest` class, run it and it should fail with "Should have 10 frames.
-Expected: 10
-  Actual: 0"
+#### RED Step 11 Open Frame Bowler
+Add open frame bowler test. They roll 4,3  5,3  6,1  and 14 gutters.  Should result in score of 22. Verify it fails with "`Expected: 22 Actual: 0`"
 ```ruby
-def test_for_ten_frames
-  roll_many(20,0)
-  @game.score
-  assert_equal 10, @game.frames.size, "Should have 10 frames"
+def test_open_frame_bowler
+  @game.roll(4)
+  @game.roll(3)
+  @game.roll(5)
+  @game.roll(3)
+  @game.roll(6)
+  @game.roll(1)
+  roll_many(14,0)
+  assert_equal 22, @game.score
 end
 ```
 
-#### GREEN Step 7 Add FRAMES constant & #score method
-Add a `FRAMES` constant to top of `Game` class.  
-Add `#score` method which iterates our integer `FRAMES` constant, adding a `:frame` hash and number value to `@frames` array.
+#### GREEN Step 12 Sum the rolls
+Adjust Game class initializing a `@rolls` array when a `Game` object is created, push (<<) `pins` into `@rolls` array within the `#roll` method and finally sum the `@rolls` array in `#score` method:
 ```ruby
-FRAMES = 10
-#..
-def score
-  @frames.clear
-  FRAMES.times do |frame_number|
-    @frames << { frame: frame_number + 1 }
+class Game
+  def initialize
+    @rolls = []
   end
-end
-```
-
-
-
-
-
-#### GREEN Step 7 Add some rolls & call score
-Call `roll_many` method to add rolls to an instance of `Game` class.  
-Call `#score` method to 
-```ruby
-def calculate_score
-  @frames.clear
-  FRAMES.times do |frame_number|
-    @frames << { frame: frame_number + 1, type: :open, rolls: [], score: 0 }
+  def roll(pins)
+    @rolls << pins
+  end
+  def score
+    @rolls.sum
   end
 end
 ```
@@ -150,272 +176,223 @@ end
 
 
 
-
-
-#### GREEN Step 7 #calculate_score method
-Add `#calculate_score` method to the `Game` class
+#### Refactor Step 13 
+Add `#roll_frame` method to `GameTest` class.
 ```ruby
-def calculate_score
-  @frames.clear
-  FRAMES.times do |frame_number|
-    @frames << { frame: frame_number + 1, type: :open, rolls: [], score: 0 }
-  end
-end
-```
-
-
-Step 1: Red - Test for a Gutter Game
-
-We'll start with the simplest scenario: a gutter game (all rolls are 0). But wait how / what's going on with `@game.frames` ? 
-
-```ruby
-class GameTest < Minitest::Test
-  def setup
-    @game = Game.new
-  end
-
-  def test_gutter_game
-    roll_many(20, 0)
-    @game.calculate_score # Explicitly call calculate_score
-    assert_equal 0, @game.frames.sum{|frame| frame[:score]}, "Gutter game should score 0"
-  end
-
-  private
-  def roll_many(rolls, pins)
-    rolls.times do
-      @game.roll(pins)
-    end
-  end
-  def roll_frame(roll1, roll2)
+private
+def roll_frame(roll1, roll2)
     @game.roll(roll1)
     @game.roll(roll2)
-  end
 end
 ```
-
-Run this test. It should fail because the calculate_score method isn't calculating the score yet.
-
-Step 2: Green - Make the Gutter Game Test Pass
-
-Modify the calculate_score method to handle a gutter game:
-
+Refactor `#test_open_frame_bowler` 
 ```ruby
-class Game
-  attr_accessor :rolls, :frames
-  FRAMES = 10
-  PINS = 10
-
-  def initialize
-    @rolls = []
-    @frames = []
-  end
-
-  def roll(pins)
-    @rolls << pins
-  end
-
-  def score
-    calculate_score
-    @frames.sum { |frame| frame[:score] }
-  end
-
-  private
-
-  def calculate_score
-    @frames.clear
-    roll_index = 0
-    FRAMES.times do |frame_number|
-      roll1 = @rolls.fetch(roll_index, 0)
-      roll2 = @rolls.fetch(roll_index + 1, 0)
-      frame_score = roll1 + roll2
-      @frames << { frame: frame_number + 1, type: :open, rolls: [roll1,roll2], score: frame_score }
-      roll_index += 2
-    end
-  end
+def test_open_frame_bowler
+  roll_frame(4,3)
+  roll_frame(5,3)
+  roll_frame(6,1)
+  roll_many(14,0)
+  assert_equal 22, @game.score
 end
 ```
 
 
-Run the test_gutter_game test. It should now pass.
 
-Step 3: Red - Test for a Game with All Ones
-
-Now, let's test a game where each roll is 1.
-
-```ruby
-def test_all_ones
-  roll_many(20, 1)
-  @game.calculate_score
-  assert_equal 20, @game.frames.sum{|frame| frame[:score]}, "All ones game should score 20"
-end
-```
-
-Run this test. It should also pass, because our current calculate_score method correctly handles this scenario.
-
-Step 4: Red - Test for a Spare
-
-Let's introduce a spare. This is where things get more complex.
-
+#### RED Step 14 Spare Test
+Add `#test_spare` test method to your GameTest.  It should fail with `"Expected: 26 Actual: 19"`
 ```ruby
 def test_spare
-  roll_frame(5, 5) # Spare in the first frame
-  roll_many(18, 1)
-  @game.calculate_score
-  assert_equal 29, @game.frames.sum{|frame| frame[:score]}, "Spare should add the next roll as a bonus"
+  roll_frame(9,1) #spare
+  roll_frame(7,2)
+  roll_many(16,0)
+  assert_equal 26, @game.score
 end
 ```
 
-Run this test. It will fail.
 
-Step 5: Green - Make the Spare Test Pass
 
-Modify calculate_score to handle spares:
-
+#### Still RED Step 15 
+Lots of refactoring to account for the spare, so let's comment out that test for now.  
+Break out `#score` method to individually add each roll and add it to the result which will be the bowlers total score.
 ```ruby
-def calculate_score
-  @frames.clear
-  roll_index = 0
-  FRAMES.times do |frame_number|
-    roll1 = @rolls.fetch(roll_index, 0)
-    roll2 = @rolls.fetch(roll_index + 1, 0)
-    frame_score = roll1 + roll2
-    frame_rolls = [roll1, roll2]
-    if spare?(roll_index)
-      frame_score = PINS + @rolls.fetch(roll_index + 2, 0)
-      frame_rolls << @rolls.fetch(roll_index+2, 0)
-      @frames << { frame: frame_number + 1, type: :spare, rolls: frame_rolls, score: frame_score }
-      roll_index += 2
-    else
-      @frames << { frame: frame_number + 1, type: :open, rolls: frame_rolls, score: frame_score }
-      roll_index += 2
-    end
+def score
+  result = 0
+  roll_index = 0 
+
+  10.times do
+    result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0)
+    roll_index += 2
   end
-end
-def spare?(frame_index)
-  @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0) == PINS
+  result
 end
 ```
 
-Run the test_spare test. It should now pass.
 
-Step 6: Red - Test for a Strike
-
-Now, let's add a test for a strike.
-
+#### GREEEN Spare logic 16
+We'll need to account for a bonus ball in the scoring of a spare. [9,1] + next roll.  
+10 + 7 = 17  
+7 + 2  = 9    
+17 + 9 = 26  
+Add the following spare logic to account for adding the bonus ball when a spare is rolled.
 ```ruby
-def test_strike
-  @game.roll(10) # Strike in the first frame
-  roll_many(18, 1)
-  @game.calculate_score
-  assert_equal 30, @game.frames.sum{|frame| frame[:score]}, "Strike should add the next two rolls as a bonus"
-end
-```
+def score
+  result = 0
+  roll_index = 0 
 
-Run this test. It will fail.
-
-Step 7: Green - Make the Strike Test Pass
-
-Modify calculate_score to handle strikes:
-
-```ruby
-def calculate_score
-  @frames.clear
-  roll_index = 0
-  FRAMES.times do |frame_number|
-    roll1 = @rolls.fetch(roll_index, 0)
-    roll2 = @rolls.fetch(roll_index + 1, 0)
-    frame_score = roll1 + roll2
-    frame_rolls = [roll1, roll2]
-    if strike?(roll_index)
-      frame_score = PINS + @rolls.fetch(roll_index + 1, 0) + @rolls.fetch(roll_index + 2, 0)
-      frame_rolls = [roll1, @rolls.fetch(roll_index + 1, 0), @rolls.fetch(roll_index + 2, 0)]
-      @frames << { frame: frame_number + 1, type: :strike, rolls: frame_rolls, score: frame_score }
-      roll_index += 1
-    elsif spare?(roll_index)
-      frame_score = PINS + @rolls.fetch(roll_index + 2, 0)
-      frame_rolls << @rolls.fetch(roll_index+2, 0)
-      @frames << { frame: frame_number + 1, type: :spare, rolls: frame_rolls, score: frame_score }
-      roll_index += 2
-    else
-      @frames << { frame: frame_number + 1, type: :open, rolls: frame_rolls, score: frame_score }
-      roll_index += 2
-    end
+  10.times do
+    result += if @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) == 10 #spare!
+                10 + @rolls.fetch(roll_index + 2, 0)
+              else
+                @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) 
+              end
+    roll_index += 2
   end
-end
-
-def strike?(frame_index)
-  @rolls.fetch(frame_index, 0) == PINS
+  result
 end
 ```
 
-Run test_strike. It should now pass.
 
-Step 8: Refactor
 
+#### Refactor 17
+replace the literal `10`'s with new constants `FRAMES` and `PINS` Constants centralize configuration and make your code more adaptable to future changes.  
+create intention revealing predicate method `#spare?` moving the spare logic within it  
+create `#spare_bonus` method  and move logic into it  
+adjust `#score` method  calling new methods..  
 ```ruby
 class Game
-  attr_accessor :rolls, :frames
   FRAMES = 10
   PINS = 10
-
   def initialize
     @rolls = []
-    @frames = []
   end
-
   def roll(pins)
     @rolls << pins
   end
-
   def score
-    calculate_score
-    @frames.sum { |frame| frame[:score] }
+    result = 0
+    roll_index = 0 
+
+    FRAMES.times do
+      result += if spare?(roll_index)
+                  spare_bonus(roll_index)
+                else
+                  @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) 
+                end
+      roll_index += 2
+    end
+    result
   end
 
   private
+  def spare?(roll_index)
+    @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) == PINS #spare!
+  end
+  def spare_bonus(roll_index)
+    PINS + @rolls.fetch(roll_index + 2, 0)
+  end
+end
+```
 
-  def calculate_score
-    @frames.clear
-    roll_index = 0
 
-    FRAMES.times do |frame_number|
-      roll1 = @rolls.fetch(roll_index, 0)
-      roll2 = @rolls.fetch(roll_index + 1, 0)
-      frame_score = 0
-      frame_rolls = [roll1]
 
-      if strike?(roll_index)
-        frame_score = PINS + @rolls.fetch(roll_index + 1, 0) + @rolls.fetch(roll_index + 2, 0)
-        frame_rolls << @rolls.fetch(roll_index + 1, 0)
-        frame_rolls << @rolls.fetch(roll_index + 2, 0)
+
+#### RED Again 18 Strike Test
+In bowling when strike is rolled that frame score is equal to the strike + next 2 rolls (bonus balls)  
+Add the following test to your GameTest class.  Ensure it fails with `"Expected: 28 Actual: 19"`
+```ruby
+def test_strike
+  @game.roll(Game::PINS)
+  roll_frame(7,2)
+  roll_many(16,0)
+  assert_equal 28, @game.score
+end
+```
+
+
+
+#### GREEN 19 Account for strike bonus balls
+Adjust the `#score` method to account for strikes AND add the next 2 rolls to 10 to get the correct score.
+```ruby
+def score
+    result = 0
+    roll_index = 0 
+
+    FRAMES.times do
+      if @rolls.fetch(roll_index, 0) == PINS #STRIKE!
+        result += PINS + @rolls.fetch(roll_index + 1, 0) + @rolls.fetch(roll_index + 2, 0)
         roll_index += 1
       elsif spare?(roll_index)
-        frame_score = PINS + @rolls.fetch(roll_index + 2, 0)
-        frame_rolls << roll2
-        frame_rolls << @rolls.fetch(roll_index + 2, 0)
+        result += spare_bonus(roll_index)
         roll_index += 2
       else
-        frame_score = roll1 + roll2
-        frame_rolls << roll2
+        result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) 
         roll_index += 2
       end
-      @frames << { frame: frame_number + 1, type: frame_type(roll1, roll2), rolls: frame_rolls, score: frame_score }
     end
+    result
+  end
+```
+
+
+
+
+#### REFACTOR 20 
+create intention revealing predicate method `#strike?` moving the strike logic within it  
+create `#strike_bonus` method  and move logic into it  
+adjust `#score` method ..
+```ruby
+class Game
+  FRAMES = 10
+  PINS = 10
+  def initialize
+    @rolls = []
+  end
+  def roll(pins)
+    @rolls << pins
+  end
+  def score
+    result = 0
+    roll_index = 0 
+
+    FRAMES.times do
+      if strike?(roll_index)
+        result += strike_bonus(roll_index)
+        roll_index += 1
+      elsif spare?(roll_index)
+        result += spare_bonus(roll_index)
+        roll_index += 2
+      else
+        result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) 
+        roll_index += 2
+      end
+    end
+    result
   end
 
-  def frame_type(roll1, roll2)
-    return :strike if roll1 == PINS
-    return :spare if roll1 + roll2 == PINS
-    :open
+  private
+  def strike?(roll_index)
+    @rolls.fetch(roll_index, 0) == PINS #STRIKE!
   end
+  def strike_bonus(roll_index)
+    PINS + @rolls.fetch(roll_index + 1, 0) + @rolls.fetch(roll_index + 2, 0)
+  end
+  def spare?(roll_index)
+    @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) == PINS #spare!
+  end
+  def spare_bonus(roll_index)
+    PINS + @rolls.fetch(roll_index + 2, 0)
+  end
+end
+```
 
-  def spare?(frame_index)
-    @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0) == PINS
-  end
 
-  def strike?(frame_index)
-    @rolls.fetch(frame_index, 0) == PINS
-  end
+
+#### GREEN 21 TEST Perfect Game
+Add following perfect game test and verify it passes.  
+```ruby
+def test_perfect_game
+  roll_many(12, Game::PINS)
+  assert_equal 300, @game.score
 end
 ```
 
