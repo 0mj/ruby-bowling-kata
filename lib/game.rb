@@ -1,52 +1,42 @@
-# frozen_string_literal: true
-
 class Game
   FRAMES = 10
   PINS = 10
-
   def initialize
     @rolls = []
   end
-
   def roll(pins)
-    @rolls.push(pins)
+    @rolls << pins
   end
-
   def score
     result = 0
-    frame_index = 0
+    roll_index = 0 
 
     FRAMES.times do
-      if strike?(frame_index)
-        result += PINS + strike_bonus(frame_index)
-        frame_index += 1
-      elsif spare?(frame_index)
-        result += PINS + spare_bonus(frame_index)
-        frame_index += 2
+      if strike?(roll_index)
+        result += strike_bonus(roll_index)
+        roll_index += 1
+      elsif spare?(roll_index)
+        result += spare_bonus(roll_index)
+        roll_index += 2
       else
-        result += @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0)
-        frame_index += 2
+        result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) 
+        roll_index += 2
       end
     end
-
     result
   end
 
   private
-
-  def spare?(frame_index)
-    @rolls.fetch(frame_index, 0) + @rolls.fetch(frame_index + 1, 0) == PINS
+  def strike?(roll_index)
+    @rolls.fetch(roll_index, 0) == PINS #STRIKE!
   end
-
-  def spare_bonus(frame_index)
-    @rolls.fetch(frame_index + 2, 0)
+  def strike_bonus(roll_index)
+    PINS + @rolls.fetch(roll_index + 1, 0) + @rolls.fetch(roll_index + 2, 0)
   end
-
-  def strike?(frame_index)
-    @rolls.fetch(frame_index, 0) == PINS
+  def spare?(roll_index)
+    @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) == PINS #spare!
   end
-
-  def strike_bonus(frame_index)
-    @rolls.fetch(frame_index + 1, 0) + @rolls.fetch(frame_index + 2, 0)
+  def spare_bonus(roll_index)
+    PINS + @rolls.fetch(roll_index + 2, 0)
   end
 end
