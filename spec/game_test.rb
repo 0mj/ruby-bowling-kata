@@ -2,47 +2,49 @@ require 'minitest/autorun'
 require_relative '../lib/game'
 
 class GameTest < Minitest::Test
+
   def setup
     @game = Game.new
   end
-
-  def test_game_class_exists
+  def test_game_class
+    
     assert_instance_of Game, @game
   end
 
-  def test_gutter_game
+  def test_gutters
     roll_many(20,0)
     assert_equal 0, @game.score
   end
 
-  # test score bowler that rolls 4,3  5,3  6,1  and 14 gutters.  Should result in score of 22.
-  def test_open_frame_bowler
-    roll_frame(4,3)
-    roll_frame(5,3)
-    roll_frame(6,1)
-    roll_many(14,0)
-    assert_equal 22, @game.score
+  def test_ones
+    roll_many(20,1)
+    assert_equal 20, @game.score
   end
 
   def test_spare
-    roll_frame(9,1) #spare
-    roll_frame(7,2)
+    roll_frame(8,2)
+    roll_frame(8,0)
     roll_many(16,0)
     assert_equal 26, @game.score
   end
 
   def test_strike
     strike
+<<<<<<< Updated upstream
     roll_frame(7,2)
+=======
+    roll_frame(9,0)
+>>>>>>> Stashed changes
     roll_many(16,0)
     assert_equal 28, @game.score
   end
 
-  def test_perfect_game
+  def test_perfect
     roll_many(12, Game::PINS)
     assert_equal 300, @game.score
   end
 
+<<<<<<< Updated upstream
   def test_frames_array
     strike
     roll_frame(5,4)
@@ -65,6 +67,13 @@ class GameTest < Minitest::Test
     roll_many(12,0)
     @game.score
     puts @game.frames
+=======
+  def test_box_score
+    roll_frame(4,3)
+    roll_many(18,0)
+    @game.score
+    assert_equal  [[4, 3], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], @game.frames
+>>>>>>> Stashed changes
   end
 
   private
@@ -77,7 +86,11 @@ class GameTest < Minitest::Test
     end
   end
   def roll_frame(roll1, roll2)
-      @game.roll(roll1)
-      @game.roll(roll2)
+    @game.roll(roll1)
+    @game.roll(roll2)
   end
+  def strike
+    @game.roll(Game::PINS)
+  end
+
 end
