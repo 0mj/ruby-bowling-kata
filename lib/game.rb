@@ -1,42 +1,58 @@
 class Game
   FRAMES = 10
   PINS = 10
+  attr_accessor :card
   def initialize
     @rolls = []
+    @card = []
   end
   def roll(pins)
     @rolls << pins
   end
+
+  def tenth_frame_strike?
+    # @card.include?({frame: 10, type: "STRIKE", frame_score: Game::PINS })
+    @card.any? { |f| f[:frame] == 10 && f[:type] == "STRIKE" }
+  end
+
   def score
     result = 0
-    roll_index = 0 
+    rollndx = 0
+    crd_frm = 0
 
     FRAMES.times do
-      if strike?(roll_index)
-        result += strike_bonus(roll_index)
-        roll_index += 1
-      elsif spare?(roll_index)
-        result += spare_bonus(roll_index)
-        roll_index += 2
-      else
-        result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) 
-        roll_index += 2
+      if strike?(rollndx)
+        frame_score = strike_bonus(rollndx)
+        result += frame_score
+        @card << { frame: crd_frm += 1, type: "STRIKE", frame_score: frame_score, total: result }
+        rollndx += 1
+
+      elsif spare?(rollndx)
+        frame_score = spare_bonus(rollndx)
+        result += frame_score
+        @card << { frame: crd_frm += 1, type: "SPARE", frame_score: frame_score, total: result }
+        rollndx += 2
+      else 
+        frame_score = @rolls.fetch(rollndx, 0) + @rolls.fetch(rollndx + 1, 0)
+        result += frame_score
+        @card << { frame: crd_frm += 1, type: "OPEN", frame_score: frame_score, total: result }
+        rollndx += 2
       end
+      
     end
     result
   end
-
   private
-  def strike?(roll_index)
-    @rolls.fetch(roll_index, 0) == PINS #STRIKE!
+  def spare?(rollndx)
+    @rolls.fetch(rollndx, 0) + @rolls.fetch(rollndx + 1, 0) == PINS #spare
   end
-  def strike_bonus(roll_index)
-    PINS + @rolls.fetch(roll_index + 1, 0) + @rolls.fetch(roll_index + 2, 0)
+  def spare_bonus(rollndx)
+    PINS + @rolls.fetch(rollndx + 2, 0)
   end
-  def spare?(roll_index)
-    @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) == PINS #spare!
+  def strike?(rollndx)
+    @rolls.fetch(rollndx, 0) == PINS #strike
   end
-  def spare_bonus(roll_index)
-    PINS + @rolls.fetch(roll_index + 2, 0)
+  def strike_bonus(rollndx)
+   PINS + @rolls.fetch(rollndx + 1, 0) + @rolls.fetch(rollndx + 2, 0) 
   end
 end
