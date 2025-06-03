@@ -2,8 +2,11 @@ class Game
   FRAMES = 10
   PINS = 10
 
+  attr_accessor :rolls
+
   def initialize
     @rolls = []
+     
   end
 
   def roll(pins)

@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require_relative '../lib/game'
 
 
-class GameTest < Minitest::Test # MiniTest module (not a class) Test is the class within the MiniTest module
+class GameTest < Minitest::Test # MiniTest module. Test is the class within the MiniTest module
   def setup
     @game = Game.new
   end
@@ -49,6 +49,24 @@ class GameTest < Minitest::Test # MiniTest module (not a class) Test is the clas
     @game.roll(Game::PINS)
     roll_two(3,4)
     assert_equal 24, @game.score
+  end
+
+  # perfect game 12 strikes must score 300
+  def test_perfect_game
+    roll_many(12, Game::PINS)
+  end
+
+  # forgot to start a new scorecard..
+  # what stops bowler from continuing to throw ? #score method ;) 
+  def test_too_many_rolls
+    roll_many(200, 1)
+    assert_equal 20, @game.score
+  end
+
+  # bowler doesn't trust result wants to see each roll
+  def test_frame_number
+    roll_many(20,1)
+    assert_equal [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], @game.rolls
   end
 
   private
