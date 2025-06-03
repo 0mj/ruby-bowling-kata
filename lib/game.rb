@@ -1,6 +1,10 @@
 class Game
   FRAMES = 10
   PINS = 10
+  ROLLS_PER_NORMAL_FRAME = 2
+  STRIKE_ROLLS_USED = 1
+  NEXT_ROLL_OFFSET = 1
+  SECOND_NEXT_ROLL_OFFSET = 2
 
   attr_accessor :rolls
 
@@ -9,66 +13,50 @@ class Game
   end
 
   def roll(pins)
-    raise ArgumentError, "Invalid number of pins" if pins < 0 || pins > 10
+    raise ArgumentError, "Invalid number of pins" if pins < 0 || pins > PINS
     @rolls << pins
   end
 
-  # def score
-  #   result = 0
-  #   roll_index = 0
-
-  #   FRAMES.times do
-  #     if strike?(roll_index)
-  #       result += strike_bonus(roll_index)
-  #       roll_index += 1
-  #     elsif spare?(roll_index)
-  #       result += spare_bonus(roll_index)
-  #       roll_index += 2
-  #     else 
-  #       result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1, 0)
-  #       roll_index += 2
-  #     end
-      
-  #   end
-  #   result
-  # end
   def score
     result = 0
-    roll_index = 0
+    current_roll = 0
     FRAMES.times do
-      frame_score, rolls_used = calculate_frame_score(roll_index)
+      frame_score, rolls_used = calculate_frame_score(current_roll)
       result += frame_score
-      roll_index += rolls_used
+      current_roll += rolls_used
     end
     result
   end
 
   private
 
-  def calculate_frame_score(roll_index)
-    if strike?(roll_index)
-      [strike_bonus(roll_index), 1]
-    elsif spare?(roll_index)
-      [spare_bonus(roll_index), 2]
+  def calculate_frame_score(current_roll)
+    if strike?(current_roll)
+      [strike_bonus(current_roll), STRIKE_ROLLS_USED]
+    elsif spare?(current_roll)
+      [spare_bonus(current_roll), ROLLS_PER_NORMAL_FRAME]
     else
-      [normal_frame_score(roll_index), 2]
+      [normal_frame_score(current_roll), ROLLS_PER_NORMAL_FRAME]
     end
   end
 
-  private
-  def spare?(roll_index)
-    @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1, 0) == PINS #spare
+  def spare?(current_roll)
+    @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + NEXT_ROLL_OFFSET, 0) == PINS
   end
-  def spare_bonus(roll_index)
-    PINS + @rolls.fetch(roll_index + 2, 0) 
+
+  def spare_bonus(current_roll)
+    PINS + @rolls.fetch(current_roll + SECOND_NEXT_ROLL_OFFSET, 0) 
   end
-  def strike?(roll_index)
-    @rolls.fetch(roll_index, 0) == PINS # strike
+
+  def strike?(current_roll)
+    @rolls.fetch(current_roll, 0) == PINS
   end
-  def strike_bonus(roll_index)
-    PINS + @rolls.fetch(roll_index + 1, 0) +@rolls.fetch(roll_index + 2, 0)
+
+  def strike_bonus(current_roll)
+    PINS + @rolls.fetch(current_roll + NEXT_ROLL_OFFSET, 0) + @rolls.fetch(current_roll + SECOND_NEXT_ROLL_OFFSET, 0)
   end
-  def normal_frame_score(roll_index)
-    @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1, 0)
+
+  def normal_frame_score(current_roll)
+    @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + NEXT_ROLL_OFFSET, 0)
   end
 end
