@@ -13,25 +13,7 @@ class Game
     @rolls << pins
   end
 
-  # def score
-  #   result = 0
-  #   roll_index = 0
 
-  #   FRAMES.times do
-  #     if strike?(roll_index)
-  #       result += strike_bonus(roll_index)
-  #       roll_index += 1
-  #     elsif spare?(roll_index)
-  #       result += spare_bonus(roll_index)
-  #       roll_index += 2
-  #     else 
-  #       result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1, 0)
-  #       roll_index += 2
-  #     end
-      
-  #   end
-  #   result
-  # end
   def score
     result = 0
     roll_index = 0
@@ -43,7 +25,8 @@ class Game
     result
   end
 
-  private
+ 
+
 
   def calculate_frame_score(roll_index)
     if strike?(roll_index)
@@ -55,7 +38,7 @@ class Game
     end
   end
 
-  private
+ 
   def spare?(roll_index)
     @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1, 0) == PINS #spare
   end
