@@ -1,6 +1,10 @@
 class Game
   FRAMES = 10
   PINS = 10
+  ROLLS_PER_NORMAL_FRAME = 2
+  STRIKE_ROLLS_USED = 1
+  NEXT_ROLL_OFFSET = 1
+  SECOND_NEXT_ROLL_OFFSET = 2
 
   attr_accessor :rolls
 
@@ -24,6 +28,7 @@ class Game
     end
     result
   end
+
 
  
 
@@ -53,5 +58,6 @@ class Game
   end
   def normal_frame_score(roll_index)
     @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1, 0)
+
   end
 end
