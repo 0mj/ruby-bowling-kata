@@ -6,10 +6,10 @@ class Game
 
   def initialize
     @rolls = []
-     
   end
 
   def roll(pins)
+    raise ArgumentError, "Invalid number of pins" if pins < 0 || pins > 10
     @rolls << pins
   end
 
