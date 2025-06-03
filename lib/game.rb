@@ -1,15 +1,21 @@
 class Game
   FRAMES = 10
   PINS = 10
+
+  attr_accessor :rolls
+
   def initialize
     @rolls = []
   end
+
   def roll(pins)
+    raise ArgumentError, "Invalid number of pins" if pins < 0 || pins > 10
     @rolls << pins
   end
+
   def score
     result = 0
-    roll_index = 0 
+    roll_index = 0
 
     FRAMES.times do
       if strike?(roll_index)
@@ -18,25 +24,26 @@ class Game
       elsif spare?(roll_index)
         result += spare_bonus(roll_index)
         roll_index += 2
-      else
-        result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) 
+      else 
+        result += @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1, 0)
         roll_index += 2
       end
+      
     end
     result
   end
 
   private
-  def strike?(roll_index)
-    @rolls.fetch(roll_index, 0) == PINS #STRIKE!
-  end
-  def strike_bonus(roll_index)
-    PINS + @rolls.fetch(roll_index + 1, 0) + @rolls.fetch(roll_index + 2, 0)
-  end
   def spare?(roll_index)
-    @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1,0) == PINS #spare!
+    @rolls.fetch(roll_index, 0) + @rolls.fetch(roll_index + 1, 0) == PINS #spare
   end
   def spare_bonus(roll_index)
-    PINS + @rolls.fetch(roll_index + 2, 0)
+    PINS + @rolls.fetch(roll_index + 2, 0) 
+  end
+  def strike?(roll_index)
+    @rolls.fetch(roll_index, 0) == PINS # strike
+  end
+  def strike_bonus(roll_index)
+    PINS + @rolls.fetch(roll_index + 1, 0) +@rolls.fetch(roll_index + 2, 0)
   end
 end
