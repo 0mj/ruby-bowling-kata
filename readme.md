@@ -408,18 +408,7 @@ def test_perfect_game
 end
 ```
 
-### 22 Refactor: Additional constants
-Within  `Game` class file add new constants below `PINS`
-```ruby 
-FRAMES = 10
-PINS = 10
-ROLLS_PER_NORMAL_FRAME = 2
-STRIKE_ROLLS_USED = 1
-NEXT_ROLL_OFFSET = 1
-SECOND_NEXT_ROLL_OFFSET = 2
-```
-
-### 23 Add Input Validation
+### 22 Add Input Validation
 In test file `game_test.rb` add validation to prevent invalid pin counts:
 ```ruby
 def roll(pins)
@@ -428,10 +417,21 @@ def roll(pins)
 end
 ```
 
-### 24 Refactor scoring logic
+### 23 Refactor scoring logic
 Extracted Frame Scoring Logic
 Refactor main scoring method to separate frame calculation logic:
-```ruby
+Within  `Game` class file add new constants below `PINS` and refactor `Game#score` 
+```ruby 
+FRAMES = 10
+PINS = 10
+ROLLS_PER_NORMAL_FRAME = 2
+STRIKE_ROLLS_USED = 1
+NEXT_ROLL_OFFSET = 1
+SECOND_NEXT_ROLL_OFFSET = 2
+
+#  .. 
+
+
 def score
   result = 0
   current_roll = 0
