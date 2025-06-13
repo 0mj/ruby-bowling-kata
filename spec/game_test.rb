@@ -51,6 +51,17 @@ class GameTest < Minitest::Test
     assert_equal 300, @game.score
   end
 
+  # normal frame aka #roll_two instance method
+  # Extract the simplest case first (normal frames)
+  # Add this test to verify current behavior before refactoring
+  def test_normal_frame_scoring
+    roll_two(3, 4)
+    roll_many_of_same(18, 0)
+    assert_equal 7, @game.score
+  end
+
+  
+
   private
   def roll_two(r1,r2)
     @game.roll(r1)

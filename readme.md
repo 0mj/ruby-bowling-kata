@@ -229,11 +229,11 @@ Break out `#score` method to individually add each roll and add it to the result
 ```ruby
 def score
   result = 0
-  current_roll = 0 
+  roll_i = 0 
 
   10.times do
-    result += @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + 1,0)
-    current_roll += 2
+    result += @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1,0)
+    roll_i += 2
   end
   result
 end
@@ -249,15 +249,15 @@ Add the following spare logic to account for adding the bonus ball when a spare 
 ```ruby
 def score
   result = 0
-  current_roll = 0 
+  roll_i = 0 
 
   10.times do
-    result += if @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + 1,0) == 10 #spare!
-                10 + @rolls.fetch(current_roll + 2, 0)
+    result += if @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1,0) == 10 #spare!
+                10 + @rolls.fetch(roll_i + 2, 0)
               else
-                @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + 1,0) 
+                @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1,0) 
               end
-    current_roll += 2
+    roll_i += 2
   end
   result
 end
@@ -282,25 +282,25 @@ class Game
   end
   def score
     result = 0
-    current_roll = 0 
+    roll_i = 0 
 
     FRAMES.times do
-      result += if spare?(current_roll)
-                  spare_bonus(current_roll)
+      result += if spare?(roll_i)
+                  spare_bonus(roll_i)
                 else
-                  @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + 1,0) 
+                  @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1,0) 
                 end
-      current_roll += 2
+      roll_i += 2
     end
     result
   end
 
   private
-  def spare?(current_roll)
-    @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + 1,0) == PINS #spare!
+  def spare?(roll_i)
+    @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1,0) == PINS #spare!
   end
-  def spare_bonus(current_roll)
-    PINS + @rolls.fetch(current_roll + 2, 0)
+  def spare_bonus(roll_i)
+    PINS + @rolls.fetch(roll_i + 2, 0)
   end
 end
 ```
@@ -327,18 +327,18 @@ Adjust the `#score` method to account for strikes AND add the next 2 rolls to 10
 ```ruby
 def score
     result = 0
-    current_roll = 0 
+    roll_i = 0 
 
     FRAMES.times do
-      if @rolls.fetch(current_roll, 0) == PINS #STRIKE!
-        result += PINS + @rolls.fetch(current_roll + 1, 0) + @rolls.fetch(current_roll + 2, 0)
-        current_roll += 1
-      elsif spare?(current_roll)
-        result += spare_bonus(current_roll)
-        current_roll += 2
+      if @rolls.fetch(roll_i, 0) == PINS #STRIKE!
+        result += PINS + @rolls.fetch(roll_i + 1, 0) + @rolls.fetch(roll_i + 2, 0)
+        roll_i += 1
+      elsif spare?(roll_i)
+        result += spare_bonus(roll_i)
+        roll_i += 2
       else
-        result += @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + 1,0) 
-        current_roll += 2
+        result += @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1,0) 
+        roll_i += 2
       end
     end
     result
@@ -364,35 +364,35 @@ class Game
   end
   def score
     result = 0
-    current_roll = 0 
+    roll_i = 0 
 
     FRAMES.times do
-      if strike?(current_roll)
-        result += strike_bonus(current_roll)
-        current_roll += 1
-      elsif spare?(current_roll)
-        result += spare_bonus(current_roll)
-        current_roll += 2
+      if strike?(roll_i)
+        result += strike_bonus(roll_i)
+        roll_i += 1
+      elsif spare?(roll_i)
+        result += spare_bonus(roll_i)
+        roll_i += 2
       else
-        result += @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + 1,0) 
-        current_roll += 2
+        result += @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1,0) 
+        roll_i += 2
       end
     end
     result
   end
 
   private
-  def strike?(current_roll)
-    @rolls.fetch(current_roll, 0) == PINS #STRIKE!
+  def strike?(roll_i)
+    @rolls.fetch(roll_i, 0) == PINS #STRIKE!
   end
-  def strike_bonus(current_roll)
-    PINS + @rolls.fetch(current_roll + 1, 0) + @rolls.fetch(current_roll + 2, 0)
+  def strike_bonus(roll_i)
+    PINS + @rolls.fetch(roll_i + 1, 0) + @rolls.fetch(roll_i + 2, 0)
   end
-  def spare?(current_roll)
-    @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + 1,0) == PINS #spare!
+  def spare?(roll_i)
+    @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1,0) == PINS #spare!
   end
-  def spare_bonus(current_roll)
-    PINS + @rolls.fetch(current_roll + 2, 0)
+  def spare_bonus(roll_i)
+    PINS + @rolls.fetch(roll_i + 2, 0)
   end
 end
 ```
@@ -418,43 +418,80 @@ end
 ```
 
 ### 23 Refactor scoring logic
-Extracted Frame Scoring Logic
-Refactor main scoring method to separate frame calculation logic:
-Within  `Game` class file add new constants below `PINS` and refactor `Game#score` 
-```ruby 
-FRAMES = 10
-PINS = 10
-ROLLS_PER_NORMAL_FRAME = 2
-STRIKE_ROLLS_USED = 1
-NEXT_ROLL_OFFSET = 1
-SECOND_NEXT_ROLL_OFFSET = 2
+Add this test to verify current behavior before refactoring
 
-#  .. 
+```ruby
+def test_normal_frame_scoring
+  roll_two(3, 4)
+  roll_many(18, 0)
+  assert_equal 7, @game.score
+end
+```
+
+Ensure tests still green and add logic that is not a strike or a spare into  `#normal_frame`  method
+```ruby
+def normal_frame(roll_i)
+  @rolls.fetch(roll_i,0) + @rolls.fetch(roll_i + 1, 0)
+end
+```
+Refactor in  `#score`   
+```ruby
+def score
+    result = 0 
+    roll_i = 0
+    FRAMES.times do
+       if strike?(roll_i)
+        result += strike_bonus(roll_i)
+        roll_i += 1
+       elsif spare?(roll_i)
+        result += spare_bonus(roll_i)
+        roll_i += 2
+      else
+        result += normal_frame(roll_i) #here
+        roll_i += 2
+      end
+    end
+    result
+  end
+```
+Run tests and verify still passing.  
 
 
+
+### 24 Add `#calculate_normal_frame_score` 
+This should return an array containing [score, rolls_used]:  
+```ruby
+def calculate_normal_frame_score(roll_i)
+  [normal_frame(roll_i), 2]
+end
+
+def normal_frame(roll_i)
+  @rolls.fetch(roll_i, 0) + @rolls.fetch(roll_i + 1, 0)
+end
+```
+
+
+Update score method:  
+
+```ruby
 def score
   result = 0
-  current_roll = 0
+  roll_i = 0
   FRAMES.times do
-    frame_score, rolls_used = calculate_frame_score(current_roll)
-    result += frame_score
-    current_roll += rolls_used
+    if strike?(roll_i)
+      result += strike_bonus(roll_i)
+      roll_i += 1
+    elsif spare?(roll_i)
+      result += spare_bonus(roll_i)
+      roll_i += 2
+    else
+      frame_score, rolls_used = calculate_normal_frame_score(roll_i) # <-- here
+      result += frame_score
+      roll_i += rolls_used
+    end
   end
   result
 end
-
-def calculate_frame_score(current_roll)
-  if strike?(current_roll)
-    [strike_bonus(current_roll), STRIKE_ROLLS_USED]
-  elsif spare?(current_roll)
-    [spare_bonus(current_roll), ROLLS_PER_NORMAL_FRAME]
-  else
-    [normal_frame_score(current_roll), ROLLS_PER_NORMAL_FRAME]
-  end
-end
-
-private 
-def normal_frame_score(current_roll)
-  @rolls.fetch(current_roll, 0) + @rolls.fetch(current_roll + NEXT_ROLL_OFFSET, 0)
-end
 ```
+
+Verify tests
