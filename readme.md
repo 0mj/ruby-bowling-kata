@@ -459,7 +459,7 @@ Run tests and verify still passing.
 
 
 ### 24 Add `#calculate_normal_frame_score` 
-This should return an array containing [score, rolls_used]:  
+This must return an array containing score and rolls_used for frame.
 ```ruby
 def calculate_normal_frame_score(roll_i)
   [normal_frame(roll_i), 2]

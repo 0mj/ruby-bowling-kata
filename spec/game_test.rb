@@ -7,73 +7,58 @@ class GameTest < Minitest::Test
     @game = Game.new
   end
 
-  # ensure instantiation of Game is possible
   def test_game_class_exists
     assert_instance_of Game, @game
   end
 
-  # 20 gutter balls must result in 0 score
-  def test_gutter_game
+  def test_gutters
     20.times do
-      @game.roll(0)
-    end
+     @game.roll(0)
+    end 
     assert_equal 0, @game.score
   end
 
-  # bowler rolls 9,0,1,5,4,5 and 14 gutters must score 24
-  def test_open_frame_rolls
-    roll_two(9,0)
-    roll_two(1,5)
-    roll_two(4,5)
-    roll_many_of_same(14,0)
-    assert_equal 24, @game.score
+  # bowler rolls 3,3  4,4  5,1  14x gutters must score 20
+  def test_no_bonuses
+    roll_frame(3,3)
+    roll_frame(4,4)
+    roll_frame(5,1)
+    roll_gutters(14)
+    assert_equal 20, @game.score
   end
 
-  # bowler rolls 7,3  4,4  and 16 gutters must score 22
+  # bowler rolls 9,1  SPARE followed by 9,0  16x gutters must score 28
   def test_spare
-    roll_two(7,3)
-    roll_two(4,4)
-    roll_many_of_same(16,0)
-    assert_equal 22, @game.score
+    roll_frame(9,1) #spare!
+    roll_frame(9,0)
+    roll_gutters(16)
+    assert_equal 28, @game.score
   end
 
-  # bowler rolls strike  4,4  and 16 gutters must score 26
+  # bowler rolls strike followed by 9,0  8,1 14x gutters must score 37
   def test_strike
-    strike
-    roll_two(4,4)
-    roll_many_of_same(16,0)
-    assert_equal 26, @game.score
+    @game.roll(Game::PINS) #19
+    roll_frame(9,0)        #28   
+    roll_frame(8,1)        #37 
+    roll_gutters(14,0)
+    assert_equal 37, @game.score
   end
 
-  # bowler rolls 12 strikes for perfect game must score 300
-  def test_perfect
-    roll_many_of_same(12, Game::PINS)
+  # bowler rolls 12x strikes in a row must score 300
+  def test_perfect_game
+    roll_gutters(12, Game::PINS) #thems strikes
     assert_equal 300, @game.score
   end
 
-  # normal frame aka #roll_two instance method
-  # Extract the simplest case first (normal frames)
-  # Add this test to verify current behavior before refactoring
-  def test_normal_frame_scoring
-    roll_two(3, 4)
-    roll_many_of_same(18, 0)
-    assert_equal 7, @game.score
+
+  private 
+  def roll_frame(roll_1, roll_2)
+    @game.roll(roll_1)
+    @game.roll(roll_2)
   end
-
-  
-
-  private
-  def roll_two(r1,r2)
-    @game.roll(r1)
-    @game.roll(r2)
-  end
-
-  def roll_many_of_same(rolls, pins)
+  def roll_gutters(rolls, pins = 0)
     rolls.times do
       @game.roll(pins)
     end
   end
-  def strike
-    @game.roll(Game::PINS)
-  end
-end
+end 
