@@ -36,6 +36,11 @@ class Game_Test < Minitest::Test
 		assert_equal 22, @game.score
 	end
 
+	def test_perfect_game
+		roll_many(12, Game::PINS)
+		assert_equal 300, @game.score
+	end
+
 
 
 	private
