@@ -16,18 +16,35 @@ class Game
 		result = 0
 
 		FRAMES.times do
-			if @rolls.fetch(fi,0) == PINS #strike! 
-				result += PINS + @rolls.fetch(fi + 1,0) + @rolls.fetch(fi + 2,0)
+			if strike?(fi) 
+				result += strike_bonus(fi)
 				fi += 1
-			elsif @rolls.fetch(fi,0) + @rolls.fetch(fi + 1,0) == PINS #spare
-				result += PINS + @rolls.fetch(fi + 2,0) #sparebonus
+			elsif spare?(fi)
+				result += spare_bonus(fi)
 				fi += 2
 			else
-				result += @rolls.fetch(fi,0) + @rolls.fetch(fi + 1, 0)
+				result += open_frame(fi)
 				fi += 2
 			end
 			
 		end
 		result
+	end
+
+	private
+	def strike?(fi)
+		@rolls.fetch(fi,0) == PINS #strike!
+	end
+	def strike_bonus(fi)
+		PINS + @rolls.fetch(fi + 1,0) + @rolls.fetch(fi + 2,0)
+	end
+	def spare?(fi)
+		@rolls.fetch(fi,0) + @rolls.fetch(fi + 1,0) == PINS #spare
+	end
+	def spare_bonus(fi)
+		PINS + @rolls.fetch(fi + 2,0) #sparebonus
+	end
+	def open_frame(fi)
+		@rolls.fetch(fi,0) + @rolls.fetch(fi + 1, 0)
 	end
 end
