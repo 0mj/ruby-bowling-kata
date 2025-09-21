@@ -23,6 +23,14 @@ class Game_Test < Minitest::Test
 		assert_equal 10, @game.score
 	end
 
+	def test_spare
+		@game.roll(9)
+		@game.roll(1) 
+		@game.roll(9)
+		roll_many(17,0)
+		assert_equal 28, @game.score
+	end
+
 	private
 	def roll_many(rolls,pins)
 		rolls.times do
