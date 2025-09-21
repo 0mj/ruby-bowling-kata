@@ -24,8 +24,7 @@ class Game_Test < Minitest::Test
 	end
 
 	def test_spare
-		@game.roll(9)
-		@game.roll(1) 
+		roll_frame(9,1)
 		@game.roll(9)
 		roll_many(17,0)
 		assert_equal 28, @game.score
@@ -36,5 +35,10 @@ class Game_Test < Minitest::Test
 		rolls.times do
 			@game.roll(pins)
 		end
+	end
+
+	def roll_frame(r1, r2)
+		@game.roll(r1)
+		@game.roll(r2)
 	end
 end
