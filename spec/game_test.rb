@@ -30,6 +30,14 @@ class Game_Test < Minitest::Test
 		assert_equal 28, @game.score
 	end
 
+	def test_strike
+		@game.roll(Game::PINS)
+		roll_frame(5,1)
+		assert_equal 22, @game.score
+	end
+
+
+
 	private
 	def roll_many(rolls,pins)
 		rolls.times do

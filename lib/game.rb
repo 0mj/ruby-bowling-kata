@@ -1,5 +1,8 @@
 class Game
 
+	PINS = 10
+	FRAMES = 10
+
 	def initialize
 		@rolls = []
 	end
@@ -12,13 +15,18 @@ class Game
 		fi = 0 #frame index
 		result = 0
 
-		10.times do
-			result += if @rolls.fetch(fi,0) + @rolls.fetch(fi + 1,0) == 10 #spare
-				10 + @rolls.fetch(fi + 2,0) #sparebonus
+		FRAMES.times do
+			if @rolls.fetch(fi,0) == PINS #strike! 
+				result += PINS + @rolls.fetch(fi + 1,0) + @rolls.fetch(fi + 2,0)
+				fi += 1
+			elsif @rolls.fetch(fi,0) + @rolls.fetch(fi + 1,0) == PINS #spare
+				result += PINS + @rolls.fetch(fi + 2,0) #sparebonus
+				fi += 2
 			else
-				@rolls.fetch(fi,0) + @rolls.fetch(fi + 1, 0)
+				result += @rolls.fetch(fi,0) + @rolls.fetch(fi + 1, 0)
+				fi += 2
 			end
-			fi += 2
+			
 		end
 		result
 	end
